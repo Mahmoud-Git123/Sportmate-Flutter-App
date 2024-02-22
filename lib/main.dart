@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'edit_group.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,9 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
-    // The Flutter framework has been optimized to make rerunning build methods
+    // The Flutter framework has been optimized to make rerunning buiłld methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    final ButtonStyle style = // This is an example of styling a button
+        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -97,12 +102,22 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            ElevatedButton(
+              style: style,
+              onPressed: null,
+              child: const Text('Disabled'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const SizedBox(height: 30),
+            ElevatedButton(
+              style: style,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const EditGroupPage(title: 'Edit Group Page')));
+              },
+              child: const Text('Edit Group'),
             ),
           ],
         ),
