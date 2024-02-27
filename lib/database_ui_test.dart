@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sportmate_flutter_application/databaseHelper.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sportmate_flutter_application/database_helper.dart';
 
 class DatabaseUI extends StatefulWidget {
   const DatabaseUI({Key? key}) : super(key: key);
@@ -10,7 +9,8 @@ class DatabaseUI extends StatefulWidget {
 }
 
 class _DatabaseUIState extends State<DatabaseUI> {
-  final user = const User(
+  // ignore: prefer_const_constructors
+  final user = User(
     id: 1,
     firstname: 'Bob',
     lastname: 'Smith',
@@ -18,10 +18,11 @@ class _DatabaseUIState extends State<DatabaseUI> {
     email: 'rhyswoods03@gmail.com',
     password: 'password',
     phone: '1234567890',
+    elo: '1000',
   );
 
   void printUserList() async {
-  List<User> userList = await DatabaseHelper.getUsers();
+  List<User> userList = await DatabaseHelperUser.getUsers();
 
   for (User user in userList) {
     print('User ID: ${user.id}');
@@ -31,7 +32,6 @@ class _DatabaseUIState extends State<DatabaseUI> {
     print('Email: ${user.email}');
     print('Password: ${user.password}');
     print('Phone: ${user.phone}');
-    print('---'); // Separator for better readability
   }
 }
 
@@ -49,16 +49,16 @@ class _DatabaseUIState extends State<DatabaseUI> {
             ElevatedButton(
               onPressed: () {
                 // Call a method from the database helper
-                DatabaseHelper.insertUser(user);
+                DatabaseHelperUser.insertUser(user);
               },
-              child: Text('Insert Data'),
+              child: const Text('Insert Data'),
             ),
             ElevatedButton(
               onPressed: () {
                 // Call another method from the database helper
                 printUserList();
               },
-              child: Text('Query Data'),
+              child: const Text('Query Data'),
             ),
             // Other UI elements
           ],
