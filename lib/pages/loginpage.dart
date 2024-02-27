@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/components/text_field.dart';
 import 'package:flutter_application_1/pages/homepage.dart';
+import 'package:flutter_application_1/pages/sign_up.dart';
 import 'package:flutter_application_1/pages/test_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget {
                 ),
                 
                 const SizedBox(height: 40),
-                //text
+                //text: Welcome to SportMate
                 const Text(
                   "Welcome to SportMate!",
                   style: TextStyle(
@@ -66,10 +67,11 @@ class HomePage extends StatelessWidget {
                   hintText: 'Password',
                 ),
 
-                const SizedBox(height: 80),
                 
 
-                //button
+                const SizedBox(height: 30),
+
+                //login button
                 GestureDetector(
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => templatePage()
                   ,)
@@ -92,18 +94,49 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(25),
                     child: const Center(
                       child: Text(
-                        "Log in ->", 
+                        "Log in", 
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Poppins',
+                          fontSize: 20
                           ),
                               
                       ),
                     )
                   ),
-                )
-            
-            
+                ),
+
+                const SizedBox(height: 20),
+                
+                //text: Don't have an account
+                const Text(
+                  "Don't have an account?",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    
+                    color: Color.fromARGB(255, 0, 13, 70),
+                    
+                    fontSize: 13,
+                    
+                  ),
+                ),
+
+                //sign up button
+                GestureDetector(
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()
+                  ,)
+                  
+                  ),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontSize: 16.0,
+                      color: Color.fromARGB(255, 6, 41, 69),
+                    ),
+                  ),
+                ),                   
               ],
             ),
           ),
