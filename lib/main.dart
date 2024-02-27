@@ -22,3 +22,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// void main() {
+//   runApp(const MaterialApp(
+//     title: 'SportsMate',
+//     home: HomeScreen(),
+//   ));
