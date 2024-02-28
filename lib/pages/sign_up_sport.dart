@@ -11,7 +11,6 @@ class SignUpSportPage extends StatelessWidget {
   final cityController = TextEditingController();
   final phoneController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,22 +56,9 @@ class SignUpSportPage extends StatelessWidget {
                 ),
                 
                 const SizedBox(height: 30),
-                
-                DropdownButton(
-                  value: 'Sports', 
-                  onChanged: (String? newValue) {
-                    // Handle selection of a new option
-                    print('Selected: $newValue');
-                  },
-                  items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
 
+                DropDownSport(),
+              
                 const SizedBox(height: 20),
 
                 //continue button
@@ -109,7 +95,7 @@ class SignUpSportPage extends StatelessWidget {
                     )
                   ),
                 ),
-
+                
                 const SizedBox(height: 20),      
               ],
             ),
@@ -117,6 +103,44 @@ class SignUpSportPage extends StatelessWidget {
         ),
         
       )
+    );
+  }
+}
+
+class DropDownSport extends StatefulWidget {
+  const DropDownSport({super.key});
+
+  @override
+  State<DropDownSport> createState() => _DropDownSport();
+}
+
+List<String> list = <String>['Tennis', 'Basketball', 'Football', 'Squash'];
+
+class _DropDownSport extends State<DropDownSport> {
+  String dropdownValue = list.first;
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Color.fromARGB(255, 28, 13, 135)),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
