@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sportsmate_flutter/components/text_field.dart';
-import 'package:sportsmate_flutter/pages/homepage.dart';
-import 'package:sportsmate_flutter/pages/sign_up_sport.dart';
-import 'package:sportsmate_flutter/pages/test_page.dart';
+import 'package:sportsmate_flutter/pages/login/sign_up_sport.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
