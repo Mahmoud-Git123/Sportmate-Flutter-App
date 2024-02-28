@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sportsmate_flutter/components/text_field.dart';
-import 'package:sportsmate_flutter/pages/homepage.dart';
-import 'package:sportsmate_flutter/pages/sign_up.dart';
-import 'package:sportsmate_flutter/pages/test_page.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
+import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -71,7 +70,7 @@ class HomePage extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => templatePage(),
+                          builder: (context) => const Navigation(),
                         )),
                     child: Container(
                         decoration: BoxDecoration(
