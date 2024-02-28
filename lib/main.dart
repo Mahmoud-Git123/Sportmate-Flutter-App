@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/nav_bar.dart';
-import 'pages/loginpage.dart';
-import 'pages/test_page.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,18 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: navBar(),
-      routes: {
-        '/home': (context) =>  HomePage(),
-
-      }
+      title: 'SportsMate',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Navigation(),
     );
   }
 }
-
-// void main() {
-//   runApp(const MaterialApp(
-//     title: 'SportsMate',
-//     home: HomeScreen(),
-//   ));
