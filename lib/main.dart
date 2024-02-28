@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/nav_bar.dart';
+import 'package:sportsmate_flutter/pages/nav_bar.dart';
 import 'pages/loginpage.dart';
 import 'pages/test_page.dart';
 
@@ -13,18 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: navBar(),
-      routes: {
-        '/home': (context) =>  HomePage(),
-
-      }
-    );
+        debugShowCheckedModeBanner: false,
+        home: navBar(),
+        routes: {
+          '/home': (context) => HomePage(),
+        });
   }
 }
 
 // void main() {
-//   runApp(const MaterialApp(
+//   runApp(const MaterialApp(F
 //     title: 'SportsMate',
 //     home: HomeScreen(),
 //   ));
