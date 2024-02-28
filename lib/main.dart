@@ -3,10 +3,15 @@ import 'package:sportmate_flutter_application/database_helper.dart';
 import 'package:sportmate_flutter_application/database_ui_test.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelperUser.initDatabase();
-  await DatabaseHelperAvailability.initDatabase();
-  await DatabaseHelperMatches.initDatabase();
   runApp(SportMate());
+
+  //Line from the DatabaseREADME step 1
+  await DatabaseManager.initializeDatabase();
+  
+
+  //Line from the DatabaseREADME step 2
+  //await DatabaseManager.openExistingDatabase();
+
 }
 
 class SportMate extends StatelessWidget {

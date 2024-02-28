@@ -12,13 +12,13 @@ class _DatabaseUIState extends State<DatabaseUI> {
   // ignore: prefer_const_constructors
   final user = User(
     id: 1,
-    firstname: 'Bob',
-    lastname: 'Smith',
-    dob: '01/01/2000',
-    email: 'rhyswoods03@gmail.com',
-    password: 'password',
-    phone: '1234567890',
-    elo: '1000',
+    firstname: 'Emily',
+    lastname: 'Jones',
+    dob: '12/04/2002',
+    email: 'emily@gmail.com',
+    password: 'oaishd',
+    phone: '45928237758',
+    elo: '200',
   );
 
   void printUserList() async {
@@ -32,6 +32,7 @@ class _DatabaseUIState extends State<DatabaseUI> {
     print('Email: ${user.email}');
     print('Password: ${user.password}');
     print('Phone: ${user.phone}');
+    print('Elo: ${user.elo}');
   }
 }
 
@@ -60,8 +61,16 @@ class _DatabaseUIState extends State<DatabaseUI> {
               },
               child: const Text('Query Data'),
             ),
-            // Other UI elements
-          ],
+            ElevatedButton(
+              onPressed: () async {
+                // Call another method from the database helper
+                User? test = await DatabaseHelperUser.getUserByEmail("emily@gmail.com");
+                print('User ID: ${test!.id}');
+                print('First Name: ${test.firstname}');
+              },
+              child: const Text('Find user with specific email'),
+            ),
+          ]
         ),
       ),
     );
