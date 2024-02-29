@@ -31,8 +31,8 @@ jobs:   # Telling what jobs we need to happen
       - name: Test flutter app
         run: flutter test
 
-      - name: Build APK
-        run: flutter build apk --release
+      # - name: Build APK
+      #   run: flutter build apk --release
 
       # - name: Build IPA
       #   run:

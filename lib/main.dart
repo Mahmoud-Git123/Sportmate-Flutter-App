@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(SportMate());
+
+  //Line from the DatabaseREADME step 1
+  // await DatabaseManager.initializeDatabase();
+
+  //Line from the DatabaseREADME step 2
+  //await DatabaseManager.openExistingDatabase();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SportMate extends StatelessWidget {
+  const SportMate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
