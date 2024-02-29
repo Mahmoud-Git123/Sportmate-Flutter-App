@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/database_helper.dart';
 import 'package:sportsmate_flutter/database_ui_test.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
+import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(SportMate());
@@ -21,8 +22,12 @@ class SportMate extends StatelessWidget {
   @override
   
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: DatabaseUI(),
+    return MaterialApp(
+      title: 'SportsMate',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Navigation(),
     );
   }
 }
