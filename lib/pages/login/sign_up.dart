@@ -6,7 +6,7 @@ class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final cityController = TextEditingController();
+  final passwordController = TextEditingController();
   final phoneController = TextEditingController();
 
   @override
@@ -63,8 +63,8 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   textField(
-                    controller: cityController,
-                    hintText: 'City',
+                    controller: passwordController,
+                    hintText: 'Password',
                   ),
                   const SizedBox(height: 20),
                   textField(
