@@ -1,0 +1,7 @@
+This is a little cheatsheet to help with using the database interface within your code.
+
+1.On your emulated device, the database may not exist, and may not contain any tables yet. To fix this call the initializeDatabase function, "await DatabaseManager.initializeDatabase();" in main after the app starts running "runApp(SportMate());". Run the app once with "flutter run" and then close the app and remove that initialize database function call.
+
+2.You should now have the database and tables created on your device. So proceed to uncomment the line "DatabaseManager.openExistingDatabase();" in main.
+
+3.You can now use the functions of each helper class to interact with the table. In the test UI provided I show the interaction with the user table, however the premise works the same for all other tables. Simply make sure you interact with the right helper for the right table, ie. DatabaseHelperUser.<function> for user table, DatabaseHelperAvailability.<function> for Availability table, and so on.

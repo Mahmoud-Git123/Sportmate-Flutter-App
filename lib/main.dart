@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/database_helper.dart';
+import 'package:sportsmate_flutter/database_ui_test.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(SportMate());
 
-void main() {
-  runApp(const MyApp());
+  //Line from the DatabaseREADME step 1
+  await DatabaseManager.initializeDatabase();
+  
+
+  //Line from the DatabaseREADME step 2
+  //await DatabaseManager.openExistingDatabase();
+
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class SportMate extends StatelessWidget {
+  const SportMate({Key? key}) : super(key: key);
+  
   @override
+  
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SportsMate',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: const Navigation(),
     );
   }
 }
