@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sportmate_flutter_application/database_helper.dart';
+import 'package:sportsmate_flutter/database_helper.dart';
 
 class DatabaseUI extends StatefulWidget {
   const DatabaseUI({Key? key}) : super(key: key);
