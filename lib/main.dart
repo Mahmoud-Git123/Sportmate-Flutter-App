@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 
 void main() {
