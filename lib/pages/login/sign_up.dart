@@ -41,7 +41,7 @@ class SignUpPage extends StatelessWidget {
 
                   //text: Welcome to SportMate
                   const Text(
-                    "Welcome to SportMate!",
+                    "Create your account",
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class SignUpPage extends StatelessWidget {
 
                   textField(
                     controller: nameController,
-                    hintText: 'Name',
+                    hintText: 'Username',
                   ),
                   const SizedBox(height: 20),
                   textField(

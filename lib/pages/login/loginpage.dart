@@ -86,8 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                               return "username is required";
                             }
                           },
-                          
-
+                        
                           decoration: const InputDecoration(
                             icon: Icon(Icons.person),
                             border: InputBorder.none,
