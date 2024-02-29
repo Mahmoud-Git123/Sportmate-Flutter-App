@@ -8,8 +8,20 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
-        centerTitle: true,
+        title: const Padding(
+          padding: EdgeInsets.all(18.0),
+          child: Text('My Profile'),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Transform.scale(
+              scale: 2.5,
+              child: Image.asset('lib/images/sportmateLogo.png'),
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
