@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:sportmate_flutter_application/database_helper.dart';
 import 'package:sportmate_flutter_application/database_ui_test.dart';
@@ -25,3 +26,26 @@ class SportMate extends StatelessWidget {
     );
   }
 }
+=======
+import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'SportsMate',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Navigation(),
+    );
+  }
+}
+>>>>>>> origin/main
