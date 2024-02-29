@@ -6,7 +6,7 @@ class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final cityController = TextEditingController();
+  final passwordController = TextEditingController();
   final phoneController = TextEditingController();
 
   @override
@@ -41,7 +41,7 @@ class SignUpPage extends StatelessWidget {
 
                   //text: Welcome to SportMate
                   const Text(
-                    "Welcome to SportMate!",
+                    "Create your account",
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class SignUpPage extends StatelessWidget {
 
                   textField(
                     controller: nameController,
-                    hintText: 'Name',
+                    hintText: 'Username',
                   ),
                   const SizedBox(height: 20),
                   textField(
@@ -63,8 +63,8 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   textField(
-                    controller: cityController,
-                    hintText: 'City',
+                    controller: passwordController,
+                    hintText: 'Password',
                   ),
                   const SizedBox(height: 20),
                   textField(
