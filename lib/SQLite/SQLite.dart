@@ -19,7 +19,6 @@ class DatabaseHelper {
   Future<int> createUser(UserModel user) async {
     final Database db = await initDB();
     db.insert('users', user.toMap());
-    
   }
 
 }
