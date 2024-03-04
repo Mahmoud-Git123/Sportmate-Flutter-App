@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/components/text_field.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up_sport.dart';
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   final nameController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final phoneController = TextEditingController();
 
   @override

@@ -16,10 +16,26 @@ class DatabaseHelper {
     });
   }
 
-  Future<int> createUser(UserModel user) async {
+
+  //login method 
+  Future<bool> login(UserModel user) async {
     final Database db = await initDB();
     db.insert('users', user.toMap());
-    
-  }
 
+    var result = await db.rawQuery(
+      "SELECT * FROM users WHERE userName = '${user.userName}' AND userPassword = '${user.userPassword}'");
+
+    if(result.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
+
+//sign up method
+// Future<int> signup(UserModel users) async {
+//   final Database db = await initDB();
+//   return db.insert('users', users.toMap());
+// }
+

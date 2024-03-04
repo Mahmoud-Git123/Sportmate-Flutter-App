@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/JSON%20models/user_model.dart';
+import 'package:sportsmate_flutter/SQLite/SQLite.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,9 +15,26 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passWordController = TextEditingController();
 
-  bool isVisible = true;
-
   final formKey = GlobalKey<FormState>();
+  final db = DatabaseHelper();
+
+  bool isVisible = true;
+  bool isLoginTrue = false;
+
+  login() async {
+    var response = await db
+      .login(UserModel(userName: usernameController.text, userPassword: passWordController.text));
+    if (response == true) {
+      if(!mounted) return;
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Navigation())
+        );
+    } else {
+      setState(() {
+        isLoginTrue = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 30),
 
                     //username
                     Container(
@@ -162,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()),
+                                builder: (context) => const SignUpPage()),
                           );
                         },
                         child: const Text(
@@ -174,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         )),
 
-                    const SizedBox(height: 120)
+                    const SizedBox(height: 100)
                   ],
                 ),
               ),

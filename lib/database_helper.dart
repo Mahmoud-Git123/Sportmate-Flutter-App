@@ -71,7 +71,7 @@ class DatabaseHelperUser {
   // Create the user table
   static Future<void> createUserTable() async {
     WidgetsFlutterBinding.ensureInitialized();
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.execute(
       // SQL statement to create user table
       'CREATE TABLE users(id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT, dob TEXT, email TEXT, password TEXT, phone TEXT, elo TEXT)',
@@ -83,7 +83,7 @@ class DatabaseHelperUser {
   // Insert a user into the database
   static Future<int> insertUser(User user) async {
     WidgetsFlutterBinding.ensureInitialized();
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
      final Map<String, Object?> userMap = user.toMapUsers();
     userMap.remove('id');
     return await db.insert(
@@ -95,7 +95,7 @@ class DatabaseHelperUser {
 
   // Query a list of users from the database
   static Future<List<User>> getUsers() async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     final List<Map<String, Object?>> userMaps = await db.query('users');
 
     return userMaps.map((userMap) {
@@ -114,7 +114,7 @@ class DatabaseHelperUser {
 
   // Update a user in the database
   static Future<void> updateUser(User user) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.update(
       'users',
       user.toMapUsers(),
@@ -125,7 +125,7 @@ class DatabaseHelperUser {
 
   // Delete a user from the database
   static Future<void> deleteUser(int id) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.delete(
       'users',
       where: 'id = ?',
@@ -137,7 +137,7 @@ class DatabaseHelperUser {
   // Custom SQL query to DB user table example
   
   static Future <User?> getUserByEmail(String email) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     final List<Map<String, Object?>> userMaps = await db.query('users', where: 'email = ?', whereArgs: [email]);
 
     if (userMaps.isNotEmpty) {
@@ -162,7 +162,7 @@ class DatabaseHelperAvailability {
 
   // Create the availability table
   static Future<void> createAvailabilityTable() async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.execute(
       // SQL statement to create availability table
       'CREATE TABLE availability(id INTEGER PRIMARY KEY, date TEXT, time TEXT, sport TEXT)',
@@ -173,7 +173,7 @@ class DatabaseHelperAvailability {
 
   // Insert availability into the database
   static Future<int> insertAvailability(Availability availability) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     Map<String, Object?> availabilityMap = availability.toMapAvailability();
     availabilityMap.remove('id');
     return await db.insert(
@@ -185,7 +185,7 @@ class DatabaseHelperAvailability {
 
   // Query a list of availability from the database
   static Future<List<Availability>> getAvailability() async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     final List<Map<String, Object?>> availabilityMaps =
         await db.query('availability');
 
@@ -201,7 +201,7 @@ class DatabaseHelperAvailability {
 
   // Update availability in the database
   static Future<void> updateAvailability(Availability availability) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.update(
       'availability',
       availability.toMapAvailability(),
@@ -212,7 +212,7 @@ class DatabaseHelperAvailability {
 
   // Delete availability from the database
   static Future<void> deleteAvailability(int id) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.delete(
       'availability',
       where: 'id = ?',
@@ -225,7 +225,7 @@ class DatabaseHelperMatches {
 
   // Create the matches table
   static Future<void> createMatchesTable() async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.execute(
       // SQL statement to create matches table
       'CREATE TABLE matches(id INTEGER PRIMARY KEY, sport TEXT, home TEXT, away TEXT, homeElo FLOAT, awayElo FLOAT, date TEXT, time TEXT, location TEXT, homeResult INTEGER, awayResult INTEGER, finalResult INTEGER)',
@@ -236,7 +236,7 @@ class DatabaseHelperMatches {
 
   // Insert matches into the database
   static Future<int> insertMatches(Matches matches) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     Map<String, Object?> matchesMap = matches.toMapMatches();
     matchesMap.remove('id');
     return await db.insert(
@@ -248,7 +248,7 @@ class DatabaseHelperMatches {
 
   // Query a list of matches from the database
   static Future<List<Matches>> getMatches() async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     final List<Map<String, Object?>> matchesMaps = await db.query('matches');
 
     return matchesMaps.map((matchesMap) {
@@ -271,7 +271,7 @@ class DatabaseHelperMatches {
 
   // Update matches in the database
   static Future<void> updateMatches(Matches matches) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.update(
       'matches',
       matches.toMapMatches(),
@@ -282,7 +282,7 @@ class DatabaseHelperMatches {
 
   // Delete matches from the database
   static Future<void> deleteMatches(int id) async {
-    final db = await _sportmatedb!;
+    final db = _sportmatedb!;
     await db.delete(
       'matches',
       where: 'id = ?',

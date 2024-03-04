@@ -3,7 +3,7 @@ import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(SportMate());
+  runApp(const SportMate());
 
   //Line from the DatabaseREADME step 1
   // await DatabaseManager.initializeDatabase();
@@ -13,7 +13,7 @@ void main() async {
 }
 
 class SportMate extends StatelessWidget {
-  const SportMate({Key? key}) : super(key: key);
+  const SportMate({super.key});
 
   @override
   Widget build(BuildContext context) {
