@@ -8,6 +8,18 @@ Database? _sportmatedb;
 
 class DatabaseManager {
 
+  static Future<void> databaseCreate() async {
+    final _sportmatedb = openDatabase(join(await getDatabasesPath(), 'sportmate_database.db'),
+      onCreate: (db, version) async {
+        // Create the necessary tables
+        await DatabaseHelperUser.createUserTable();
+        await DatabaseHelperAvailability.createAvailabilityTable();
+        await DatabaseHelperMatches.createMatchesTable();
+      },
+      version: 1, // Increment this number when you need to upgrade the database schema
+    );
+  }
+
    static Future<void> initializeDatabase() async {
     WidgetsFlutterBinding.ensureInitialized();
     // Open the database

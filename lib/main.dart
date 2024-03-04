@@ -8,8 +8,11 @@ void main() async {
   runApp(SportMate());
 
   //Line from the DatabaseREADME step 1
-  await DatabaseManager.initializeDatabase();
+  //await DatabaseManager.initializeDatabase();
   
+
+  await DatabaseManager.databaseCreate();
+
 
   //Line from the DatabaseREADME step 2
   //await DatabaseManager.openExistingDatabase();
@@ -27,7 +30,7 @@ class SportMate extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Navigation(),
+      home: const DatabaseUI(),
     );
   }
 }
