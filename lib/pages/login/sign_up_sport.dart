@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
 
 
@@ -56,13 +55,13 @@ class SignUpSportPage extends StatelessWidget {
                 
                 const SizedBox(height: 30),
 
-                DropDownSport(),
+                const DropDownSport(),
               
                 const SizedBox(height: 20),
 
                 //continue button
                 GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Navigation()
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Navigation()
                   ,)
                   
                   ),

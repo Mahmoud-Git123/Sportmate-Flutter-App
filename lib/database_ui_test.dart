@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/database_helper.dart';
 
 class DatabaseUI extends StatefulWidget {
-  const DatabaseUI({Key? key}) : super(key: key);
+  const DatabaseUI({super.key});
 
   @override
   State<DatabaseUI> createState() => _DatabaseUIState();

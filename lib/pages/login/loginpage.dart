@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
@@ -72,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                   
                       //username 
                       Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(150),
-                          color: Color.fromARGB(255, 183, 208, 246),
+                          color: const Color.fromARGB(255, 183, 208, 246),
                         ),
                           
                         child: TextFormField(
@@ -85,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                             if(value!.isEmpty) {
                               return "username is required";
                             }
+                            return null;
                           },
                         
                           decoration: const InputDecoration(
@@ -98,11 +96,11 @@ class _LoginPageState extends State<LoginPage> {
                   
                       //password
                       Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(150),
-                          color: Color.fromARGB(255, 183, 208, 246),
+                          color: const Color.fromARGB(255, 183, 208, 246),
                         ),
                           
                         child: TextFormField(
@@ -111,20 +109,21 @@ class _LoginPageState extends State<LoginPage> {
                             if(value!.isEmpty) {
                               return "username is required";
                             }
+                            return null;
                           },
 
                           obscureText: isVisible,
                           decoration: InputDecoration(
-                            icon: Icon(Icons.lock),
+                            icon: const Icon(Icons.lock),
                             border: InputBorder.none,
-                            label: Text("Password"),
+                            label: const Text("Password"),
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
                                   isVisible = !isVisible;
                                 });
                               }, 
-                              icon: Icon(Icons.visibility))
+                              icon: const Icon(Icons.visibility))
                           ),
                         ),        
                       ),
@@ -136,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 60,
                         width: MediaQuery.of(context).size.width* .9,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 22, 18, 154),
+                          color: const Color.fromARGB(255, 22, 18, 154),
                           borderRadius: BorderRadius.circular(200)                        
                           ),
                         child: TextButton(
