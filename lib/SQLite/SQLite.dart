@@ -5,8 +5,9 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseHelper {
   final userDatabase = 'users.db';
   String userTable = 
-    "CREATE TABLE users (userID INTEGER PRIMARY KEY AUTOINCREMENT, userName TEXT NOT NULL, userEmail TEXT NOT NULL, userPassword TEXT NOT NULL, )";
+    "CREATE TABLE users (userID INTEGER PRIMARY KEY AUTOINCREMENT, userName TEXT NOT NULL, userEmail TEXT NOT NULL, userPassword TEXT NOT NULL, userNumber INT NOT NULL)";
   
+  //creating the table 
   Future<Database> initDB() async {
     final dataBasePath = await getDatabasesPath();
     final path = join(dataBasePath, userDatabase);
@@ -14,6 +15,13 @@ class DatabaseHelper {
     return openDatabase(path, version: 1, onCreate: (db, version) async {
       await db.execute(userTable);  
     });
+  }
+
+  
+//sign up method 
+  Future<int> signup(UserModel user) async {
+    final Database db = await initDB();
+    return db.insert('users', user.toMap());
   }
 
 
@@ -32,10 +40,4 @@ class DatabaseHelper {
     }
   }
 }
-
-//sign up method
-// Future<int> signup(UserModel users) async {
-//   final Database db = await initDB();
-//   return db.insert('users', users.toMap());
-// }
 
