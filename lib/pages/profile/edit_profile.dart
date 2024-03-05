@@ -9,7 +9,7 @@ class EditProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
-          child: Text('Edit Profile'),
+          child: Text('Edit Profile!'),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(0.0),

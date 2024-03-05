@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/DbTest.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SportMate());
-
-  //Line from the DatabaseREADME step 1
-  // await DatabaseManager.initializeDatabase();
-
-  //Line from the DatabaseREADME step 2
-  //await DatabaseManager.openExistingDatabase();
+  runApp(SportMate());
 }
 
 class SportMate extends StatelessWidget {

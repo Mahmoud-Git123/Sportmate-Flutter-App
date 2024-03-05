@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_users.dart';
 
 class MatchmakingPage extends StatefulWidget {
-  const MatchmakingPage({super.key});
+  const MatchmakingPage({Key? key}) : super(key: key);
 
   @override
   _MatchmakingPageState createState() => _MatchmakingPageState();
@@ -13,7 +13,7 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
   String? location;
   String? selectedSport;
 
-  final List<String> sports = [  //This should be the sports that the user has chosen to add to their profile
+  final List<String> sports = [
     'Football',
     'Basketball',
     'Tennis',
@@ -37,8 +37,8 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
           child: Padding(
             padding: const EdgeInsets.only(left: 30.0),
             child: Transform.scale(
-              scale: 2.5, 
-              child: Image.asset('lib/images/sportmateLogo.png'), 
+              scale: 2.5,
+              child: Image.asset('lib/images/sportmateLogo.png'),
             ),
           ),
         ),
@@ -52,57 +52,59 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
             children: [
               const Text('Choose Date and Time:'),
               const SizedBox(height: 8),
-ElevatedButton(
-  onPressed: () async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light().copyWith(
-              primary: Colors.blue,  
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null) {
-      final TimeOfDay? timePicked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
-      if (timePicked != null) {
-        setState(() {
-          selectedDateTime = DateTime(
-            picked.year,
-            picked.month,
-            picked.day,
-            timePicked.hour,
-            timePicked.minute,
-          );
-        });
-      }
-    }
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: const Color.fromARGB(255, 230, 245, 253),
-  ),
-  child: Text(selectedDateTime == null
-      ? 'Choose Date and Time'
-      : '${selectedDateTime!.toLocal()}',
-      style: const TextStyle(color: Color.fromARGB(255, 2, 38, 63))
+              ElevatedButton(
+                onPressed: () async {
+                  final DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2101),
+                    builder: (BuildContext context, Widget? child) {
+                      return Theme(
+                        data: ThemeData.light().copyWith(
+                          colorScheme: const ColorScheme.light().copyWith(
+                            primary: Colors.blue,
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (picked != null) {
+                    final TimeOfDay? timePicked = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    if (timePicked != null) {
+                      setState(() {
+                        selectedDateTime = DateTime(
+                          picked.year,
+                          picked.month,
+                          picked.day,
+                          timePicked.hour,
+                          timePicked.minute,
+                        );
+                      });
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 253),
+                ),
+                child: Text(
+                  selectedDateTime == null
+                      ? 'Choose Date and Time'
+                      : '${selectedDateTime!.toLocal()}',
+                  style: const TextStyle(color: Color.fromARGB(255, 2, 38, 63)),
                 ),
               ),
               if (selectedDateTime == null)
                 const Text(
                   'Please choose date and time',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 228, 193, 190),
-                      fontFamily: 'Poppins'),
+                    color: Color.fromARGB(255, 228, 193, 190),
+                    fontFamily: 'Poppins',
+                  ),
                 ),
               const SizedBox(height: 16),
               TextFormField(
@@ -139,8 +141,7 @@ ElevatedButton(
                 items: sports.map((sport) {
                   return DropdownMenuItem(
                     value: sport,
-                    child: Text(sport,
-                        style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text(sport, style: Theme.of(context).textTheme.bodyMedium),
                   );
                 }).toList(),
               ),

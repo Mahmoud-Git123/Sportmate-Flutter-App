@@ -8,12 +8,16 @@ class Matchmake {
     double? _elo;
 
 
-    Matchmake(int winStreak, int lossStreak) {
+    Matchmake() {
 
         _winStreakMulti = 0;
         _lossStreakMultil = 0;
+        _expectedResult = 0;
         _elo = 0;
-        
+
+    }
+
+    void setMultipliers(int lossStreak, int winStreak){
         if (lossStreak > 1) {
             _lossStreakMultil = 0;
         }
@@ -21,23 +25,13 @@ class Matchmake {
         else if (winStreak > 1) {
             _winStreakMulti = winStreak == 2 ? 0.1 : winStreak == 3 ? 0.2 : 0.25;
         }
-
-    }
-
-    double findOpponent(){
-        
-        //finds and sets opponent (only needs to be done once per match, NOT per player)
-
-        double opponentElo = 1; //PLACEGHOLDER UNTIL DB
-        return opponentElo;
-
     }
 
     
-    double expectedResultCalc(double opponentElo){
+    double expectedResultCalc(double opponentElo, double winStreak, double lossStreak){
 
-        double? eloDifference = _elo! - opponentElo;
-        double? expectedResult = 1 / (math.pow(10, eloDifference / 400) + 1);
+        double eloDifference = _elo! - opponentElo;
+        double expectedResult = 1 / (math.pow(10, eloDifference / 400) + 1);
 
         return expectedResult;
     }
@@ -59,21 +53,35 @@ class Matchmake {
         return newRank;
     }
 
-    // one player matchmakes and requests game form a user
-    void doMatchmake(){ 
+        List findOpponents(){
+        
+        //finds and sets opponent (only needs to be done once per match, NOT per player)
 
-        double oppElo = findOpponent();
-        _expectedResult = expectedResultCalc(oppElo);
+        //gets 3 users from database
+        
+        
+        //gets users from database that match
+        List<double> opponents = [];
+
+        return opponents;
+
+    }
+
+    // one player matchmakes and requests game form a user
+    void doMatchmake(double oppElo, winStreak, lossStreak){ 
+
+      // add this to database
+      _expectedResult = expectedResultCalc(oppElo, winStreak, lossStreak);
+      // shown on schedule
 
     }
 
     // both players get a new rank and new elo
-    List doGameOver(String gameResult) {
+    void doGameOver(String gameResult) {
 
         double newElo = postGameEloCalc(gameResult);
-        
-        //returns newly calculated elo and rank
-        return [newElo, newRank(newElo)];
+
+        //add to database
 
     }
 

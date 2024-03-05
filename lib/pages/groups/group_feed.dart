@@ -8,10 +8,24 @@ class GroupFeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${group.name} Feed"),
-        backgroundColor: Colors.blue, // Set the app bar color
+      
+    appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.all(18.0),
+          child: Text('Your Groups!'),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Transform.scale(
+              scale: 2.5,
+              child: Image.asset('lib/images/sportmateLogo.png'),
+            ),
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +45,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Joined",
@@ -45,7 +59,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Invite +",
@@ -64,7 +78,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Tagged",
@@ -78,7 +92,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Media(photos/videos)",
@@ -92,7 +106,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Events",
