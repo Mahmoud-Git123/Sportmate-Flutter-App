@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/components/text_field.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up_sport.dart';
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
+
+  bool isVisible = true;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +36,13 @@ class SignUpPage extends StatelessWidget {
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
                   transform: GradientRotation(0.5))),
-          child: Center(
+          child: SingleChildScrollView(
+            child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
+              child: Form(
+                key: formKey,
+                child: Column(
                 children: [
                   //logo
                   Padding(
@@ -52,24 +64,125 @@ class SignUpPage extends StatelessWidget {
 
                   const SizedBox(height: 30),
 
-                  textField(
-                    controller: nameController,
-                    hintText: 'Username',
+                  //username field
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      color: const Color.fromARGB(255, 183, 208, 246),
+                    ),
+                    child: TextFormField(
+                      controller: nameController,
+                      //validating empty fields
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "please enter username";
+                        }
+                        return null;
+                      },
+
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        label: Text("Username"),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  textField(
-                    controller: emailController,
-                    hintText: 'Email',
+
+                  //email field
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      color: const Color.fromARGB(255, 183, 208, 246),
+                    ),
+                    child: TextFormField(
+                      controller: emailController,
+                      //validating empty fields
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "please enter your email";
+                        }
+                        return null;
+                      },
+
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        label: Text("Email"),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  textField(
-                    controller: passwordController,
-                    hintText: 'Password',
+
+
+                  //password field
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      color: const Color.fromARGB(255, 183, 208, 246),
+                    ),
+                    child: TextFormField(
+                      controller: passwordController,
+                      //validating empty fields
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "please enter a password";
+                        }
+                        return null;
+                      },
+
+                     obscureText: isVisible,
+                        decoration: InputDecoration(
+                            icon: const Icon(Icons.lock),
+                            border: InputBorder.none,
+                            label: const Text("Password"),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isVisible = !isVisible;
+                                  });
+                                },
+                                icon: const Icon(Icons.visibility))),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  textField(
-                    controller: phoneController,
-                    hintText: 'Phone Number',
+
+                  //phone number field 
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      color: const Color.fromARGB(255, 183, 208, 246),
+                    ),
+                    child: TextFormField(
+                      controller: phoneController,
+                      //validating empty fields
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "please confirm password";
+                        }
+                        return null;
+                      },
+
+                      obscureText: isVisible,
+                        decoration: InputDecoration(
+                            icon: const Icon(Icons.lock),
+                            border: InputBorder.none,
+                            label: const Text("Confirm password"),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isVisible = !isVisible;
+                                  });
+                                },
+                                icon: const Icon(Icons.visibility))),
+                    ),
                   ),
 
                   const SizedBox(height: 30),
@@ -112,8 +225,11 @@ class SignUpPage extends StatelessWidget {
                   const SizedBox(height: 20),
                 ],
               ),
+              )
+              
             ),
           ),
+          )          
         ));
   }
 }

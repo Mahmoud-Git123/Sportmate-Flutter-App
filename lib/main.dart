@@ -8,7 +8,7 @@ void main() async {
 }
 
 class SportMate extends StatelessWidget {
-  const SportMate({Key? key}) : super(key: key);
+  const SportMate({super.key});
 
   @override
   Widget build(BuildContext context) {

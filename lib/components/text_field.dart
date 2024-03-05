@@ -21,17 +21,17 @@ class textField extends StatelessWidget {
         //showText: showText,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.white),
             borderRadius: BorderRadius.circular(25),
           
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255 , 2, 38, 63)),
+            borderSide: const BorderSide(color: Color.fromARGB(255 , 2, 38, 63)),
             borderRadius: BorderRadius.circular(25),
             
       
           ),
-          fillColor: Color.fromARGB(255 , 230, 245, 253),
+          fillColor: const Color.fromARGB(255 , 230, 245, 253),
           filled: true,
 
           hintText: hintText,

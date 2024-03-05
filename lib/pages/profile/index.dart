@@ -21,16 +21,16 @@ class Profile extends StatelessWidget {
           ),
         ),
         textTheme: const TextTheme(
-          headline6: TextStyle(
+          titleLarge: TextStyle(
             fontFamily: 'Poppins',
           ),
-          bodyText2: TextStyle(
+          bodyMedium: TextStyle(
             fontFamily: 'Poppins',
           ),
-          button: TextStyle(
+          labelLarge: TextStyle(
             fontFamily: 'Poppins',
           ),
-          subtitle1: TextStyle(
+          titleMedium: TextStyle(
             fontFamily: 'Poppins',
             fontStyle: FontStyle.italic,
           ),
