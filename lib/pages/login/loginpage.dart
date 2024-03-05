@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/JSON%20models/user_model.dart';
-import 'package:sportsmate_flutter/SQLite/SQLite.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
@@ -16,25 +15,24 @@ class _LoginPageState extends State<LoginPage> {
   final passWordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  final db = DatabaseHelper();
 
   bool isVisible = true;
   bool isLoginTrue = false;
 
-  login() async {
-    var response = await db
-      .login(UserModel(userName: usernameController.text, userPassword: passWordController.text));
-    if (response == true) {
-      if(!mounted) return;
-        Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Navigation())
-        );
-    } else {
-      setState(() {
-        isLoginTrue = true;
-      });
-    }
-  }
+  // login() async {
+  //   var response = await db
+  //     .login(UserModel(userName: usernameController.text, userPassword: passWordController.text));
+  //   if (response == true) {
+  //     if(!mounted) return;
+  //       Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => const Navigation())
+  //       );
+  //   } else {
+  //     setState(() {
+  //       isLoginTrue = true;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SignUpPage()),
+                                builder: (context) => SignUpPage()),
                           );
                         },
                         child: const Text(
