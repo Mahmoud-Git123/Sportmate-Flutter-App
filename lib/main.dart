@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/DbTest.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 void main() async {
@@ -16,7 +17,7 @@ class SportMate extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Navigation(),
+      home: const LoginPage(),
     );
   }
 }

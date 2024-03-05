@@ -36,12 +36,9 @@ class DbHelper{
     await db.execute('''
       CREATE TABLE user(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        firstname TEXT,
-        lastname TEXT,
-        dob TEXT,
+        userName TEXT,
         email TEXT,
         password TEXT,
-        phone TEXT,
         elo FLOAT
       )
     ''');

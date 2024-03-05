@@ -21,12 +21,9 @@ class DbTest extends StatelessWidget {
 
                   DbHelper dbHelper = DbHelper.instance;
                   Map<String, Object> testUser = {
-                    'firstname': 'Emily',
-                    'lastname': 'Jones',
-                    'dob': '12/04/2002',
+                    'userName': 'Emily',
                     'email': 'emily@gmail.com',
                     'password': 'oaishd',
-                    'phone': '45928237758',
                     'elo': 200,
                   };
 
