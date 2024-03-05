@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/pages/schedule/schedule.dart';
 import 'edit_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
-          child: Text('My Profile'),
+          child: Text('Your Profile!'),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(0.0),
@@ -33,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
               height: 120,
               child: CircleAvatar(
                 radius: 25,
-                backgroundColor: Colors.grey,
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 child: Icon(Icons.person, size: 25, color: Colors.grey),
               ),
             ),
@@ -54,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlueAccent,
+                    backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                     side: BorderSide.none,
                     minimumSize: const Size(200, 50),
                     shape: const StadiumBorder()),
@@ -70,9 +71,16 @@ class ProfileScreen extends StatelessWidget {
             Column(
               children: [
                 _buildMenuButton(
-                    text: 'Upcoming Events',
-                    icon: Icons.upcoming,
-                    onPressed: () {}),
+                    text: 'Your Schedule!',
+                    icon: Icons.timelapse,
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SchedulePage(),
+                        ),
+                      );
+                  }),
                 _buildMenuButton(
                   text: 'Sports Subscriptions',
                   icon: Icons.sports_soccer,

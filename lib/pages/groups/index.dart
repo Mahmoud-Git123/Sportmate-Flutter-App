@@ -44,11 +44,52 @@ class Groups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Your Groups"),
-          backgroundColor: Colors.blue, // Set the app bar color
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 230, 245, 253),
+          foregroundColor: Color.fromARGB(255, 234, 234, 234),
+          titleTextStyle: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 2, 38, 63),
+            fontSize: 20,
+          ),
         ),
+        textTheme: const TextTheme(
+          headline6: TextStyle(
+            fontFamily: 'Poppins',
+          ),
+          bodyText2: TextStyle(
+            fontFamily: 'Poppins',
+          ),
+          button: TextStyle(
+            fontFamily: 'Poppins',
+          ),
+          subtitle1: TextStyle(
+            fontFamily: 'Poppins',
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ),
+      home: Scaffold(
+    appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.all(18.0),
+          child: Text('Your Groups!'),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Transform.scale(
+              scale: 2.5,
+              child: Image.asset('lib/images/sportmateLogo.png'),
+            ),
+          ),
+        ),
+      ),
         body: Column(
           children: [
             const ListTile(
@@ -80,7 +121,7 @@ class Groups extends StatelessWidget {
                 // Handle button press
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
               ),
               child: const Text(
                 "Create New +",

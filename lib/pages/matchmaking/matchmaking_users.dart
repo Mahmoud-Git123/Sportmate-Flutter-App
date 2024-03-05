@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation';
+import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation.dart';
 
 class MatchingUsers extends StatelessWidget {
   final DateTime? selectedDateTime;
   final String? location;
   final String? selectedSport;
 
-  const MatchingUsers({super.key, 
+  const MatchingUsers({
+    Key? key,
     required this.selectedDateTime,
     required this.location,
     required this.selectedSport,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class MatchingUsers extends StatelessWidget {
     ];
 
     return Scaffold(
-            appBar: AppBar(
+      appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
           child: Text('Matching Players...'),
@@ -64,6 +65,12 @@ class MatchingUsers extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => MatchmakingConfirmation(
                               playerName: player['name'],
+                              dateTime: selectedDateTime!, // Provide selectedDateTime here
+                              sport: selectedSport!, // Provide selectedSport here
+                              rank: player['rank'], // Provide player rank here
+                              onMatchConfirmed: () {
+                                // Handle match confirmation logic here
+                              },
                             ),
                           ),
                         );
