@@ -151,9 +151,6 @@ class DbHelper{
     return row != null;
   }
 
-
-}
-
   // returns all rows from a specific table where a column has a specific value
   Future <List<Map<String, dynamic>>> getRowsWhere(String tableName, String column, String value) async {
     Database db = await instance.database;
@@ -175,4 +172,5 @@ class DbHelper{
     AND availability.dateTime = '$dateTime'
     ''');
   }
+
 }
