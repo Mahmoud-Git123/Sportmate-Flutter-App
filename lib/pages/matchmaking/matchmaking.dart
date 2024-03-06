@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_users.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
 
 class MatchmakingPage extends StatefulWidget {
   const MatchmakingPage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
   DateTime? selectedDateTime;
   String? location;
   String? selectedSport;
+  DbHelper dbHelper = DbHelper.instance;
 
   final List<String> sports = [
     'Football',
@@ -147,9 +149,20 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate() &&
                       selectedDateTime != null) {
+
+                    // Add availability to database
+                    Map<String, Object> testAvailability = {
+                    'email': 'emily@gmail.com', // needs to be changed to current users email
+                    'dateTime': selectedDateTime.toString(),
+                    'sport': selectedSport.toString(),
+                  };
+                  dbHelper.insertToTable('availability', testAvailability);
+
+                  List<Map<String, dynamic>> availableUsers = await dbHelper.joinUserAndAvailability(200 - 100, 200 + 100, selectedDateTime.toString());
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -157,6 +170,7 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                           selectedDateTime: selectedDateTime,
                           location: location,
                           selectedSport: selectedSport,
+                          matchingPlayers: availableUsers,
                         ),
                       ),
                     );
