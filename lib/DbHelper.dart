@@ -46,8 +46,8 @@ class DbHelper{
     await db.execute('''
       CREATE TABLE availability(
         id INTEGER PRIMARY KEY,
-        date TEXT,
-        time TEXT,
+        email TEXT,
+        dateTime DATETIME,
         sport TEXT
       )
     ''');
@@ -56,8 +56,7 @@ class DbHelper{
       CREATE TABLE match(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sport TEXT,
-        date TEXT,
-        time TEXT,
+        dateTime DATETIME,
         location TEXT,
         homeName TEXT,
         awayName TEXT,
@@ -99,4 +98,25 @@ class DbHelper{
     return await db.query(tableName);
   }
 
+  // returns all rows from a specific table where a column has a specific value
+  Future <List<Map<String, dynamic>>> getRowsWhere(String tableName, String column, String value) async {
+    Database db = await instance.database;
+    return await db.query(tableName, where: '$column = ?', whereArgs: [value]);
+  }
+
+  // returns all rows from a specific table where a column has a value between two values
+  Future<List<Map<String, dynamic>>> getRowsWhereBetween(String tableName, String column, double lower, double upper) async {
+    Database db = await instance.database;
+    return await db.query(tableName, where: '$column BETWEEN ? AND ?', whereArgs: [lower, upper]);
+  }
+
+  Future<List<Map<String, dynamic>>> joinUserAndAvailability(double lowerElo, double upperElo, String dateTime) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    SELECT user.userName, user.elo, availability.dateTime, availability.sport FROM user
+    INNER JOIN availability ON user.email = availability.email
+    WHERE user.elo BETWEEN $lowerElo AND $upperElo
+    AND availability.dateTime = '$dateTime'
+    ''');
+  }
 }

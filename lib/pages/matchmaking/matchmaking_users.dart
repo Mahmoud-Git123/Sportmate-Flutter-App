@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/matchmake.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation.dart';
 
 class MatchingUsers extends StatelessWidget {
   final DateTime? selectedDateTime;
   final String? location;
   final String? selectedSport;
+  final List<Map<String, dynamic>> matchingPlayers;
 
   const MatchingUsers({
     Key? key,
     required this.selectedDateTime,
     required this.location,
     required this.selectedSport,
+    required this.matchingPlayers,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> matchingPlayers = [
-      {'name': 'Player 1', 'rank': 'Diamond 3'},
-      {'name': 'Player 2', 'rank': 'Diamond 1'},
-      {'name': 'Player 3', 'rank': 'Diamond 2'},
-    ];
+
+    Matchmake m = Matchmake();
 
     return Scaffold(
       appBar: AppBar(
@@ -54,9 +55,9 @@ class MatchingUsers extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final player = matchingPlayers[index];
                   return ListTile(
-                    title: Text('${player['name']}',
+                    title: Text('${player['userName']}',
                         style: Theme.of(context).textTheme.bodyMedium),
-                    subtitle: Text('${player['rank']}',
+                    subtitle: Text('${m.getRank(player['elo'])}',
                         style: Theme.of(context).textTheme.titleMedium),
                     trailing: ElevatedButton(
                       onPressed: () {
@@ -64,13 +65,27 @@ class MatchingUsers extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => MatchmakingConfirmation(
-                              playerName: player['name'],
+                              playerName: player['userName'],
                               dateTime: selectedDateTime!, // Provide selectedDateTime here
                               sport: selectedSport!, // Provide selectedSport here
-                              rank: player['rank'], // Provide player rank here
+                              rank: m.getRank(player['elo']), // Provide player rank here
                               onMatchConfirmed: () {
                                 // Handle match confirmation logic here
-                              },
+                                DbHelper dbHelper = DbHelper.instance;
+                                Map<String, Object> newMatch = {
+                                  'sport': '$selectedSport',
+                                  'dateTime': '$selectedDateTime',
+                                  'location': '$location',
+                                  'homeName': 'Emily', // needs changing to user's name
+                                  'awayName': '${player['userName']}', 
+                                  'homeElo': 200, // needs changing to user's elo
+                                  'homePredictedResult': m.expectedResultCalc(200, player['elo']),
+                                  'awayElo': player['elo'],
+                                  'awayPredictedResult': m.expectedResultCalc(player['elo'], 200),
+                                  'gameResult': 'pending',
+                                };
+                                dbHelper.insertToTable('match', newMatch);
+                              }
                             ),
                           ),
                         );
