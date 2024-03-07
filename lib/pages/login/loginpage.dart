@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final passWordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  
+
   DbHelper dbHelper = DbHelper.instance;
 
   bool isVisible = true;
@@ -158,12 +158,14 @@ class _LoginPageState extends State<LoginPage> {
                           if (formKey.currentState!.validate()) {
                             String inputUsername = usernameController.text;
                             String inputPassword = passWordController.text;
-                            String? databasePassword = await dbHelper.getPasswordByUsername('user', inputUsername);
-                            bool usernameExist = await dbHelper.doesUsernameExist('user', inputUsername);
-                            //check if username exists in database 
-                            if(usernameExist == true) {
+                            String? databasePassword = await dbHelper
+                                .getPasswordByUsername('user', inputUsername);
+                            bool usernameExist = await dbHelper
+                                .doesUsernameExist('user', inputUsername);
+                            //check if username exists in database
+                            if (usernameExist == true) {
                               //if username exists, check if password is correct
-                              if(databasePassword==inputPassword) {
+                              if (databasePassword == inputPassword) {
                                 //if password is correct, go to navigationPage
                                 Navigator.push(
                                   context,
@@ -241,5 +243,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
 }

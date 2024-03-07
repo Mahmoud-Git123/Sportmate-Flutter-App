@@ -11,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
-          child: Text('Your Profile!'),
+          child: Text('Your Profile'),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(0.0),
@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
               height: 120,
               child: CircleAvatar(
                 radius: 25,
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
+                backgroundColor: Color.fromARGB(255, 230, 245, 254),
                 child: Icon(Icons.person, size: 25, color: Colors.grey),
               ),
             ),
@@ -71,16 +71,16 @@ class ProfileScreen extends StatelessWidget {
             Column(
               children: [
                 _buildMenuButton(
-                    text: 'Your Schedule!',
+                    text: 'Your Schedule',
                     icon: Icons.timelapse,
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SchedulePage(),
+                          builder: (context) => const SchedulePage(),
                         ),
                       );
-                  }),
+                    }),
                 _buildMenuButton(
                   text: 'Sports Subscriptions',
                   icon: Icons.sports_soccer,
@@ -90,9 +90,55 @@ class ProfileScreen extends StatelessWidget {
                     text: 'Settings', icon: Icons.settings, onPressed: () {}),
                 const Divider(),
                 _buildMenuButton(
-                    text: 'Information', icon: Icons.info, onPressed: () {}),
+                    text: 'Information',
+                    icon: Icons.info,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Credits"),
+                              content: const Text(
+                                  "Joshua Rowley\nSye Phasuk\nRhys Woods\nKuwsh Okai\nJojo Andoh\nMahmoud Abdelfattah\nStanislaw Nowaczyk"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Close'),
+                                ),
+                              ],
+                            );
+                          });
+                    }),
                 _buildMenuButton(
-                    text: 'Logout', icon: Icons.logout, onPressed: () {}),
+                    text: 'Logout',
+                    icon: Icons.logout,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Logout"),
+                              content: const Text(
+                                  "Are you sure you want to logout?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    // logic for logging out the user goes here
+                                  },
+                                  child: const Text('Logout'),
+                                )
+                              ],
+                            );
+                          });
+                    }),
               ],
             ),
           ],

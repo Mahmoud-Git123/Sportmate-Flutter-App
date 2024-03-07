@@ -5,6 +5,8 @@ import 'package:sportsmate_flutter/pages/matchmaking/matchmaking.dart';
 import 'package:sportsmate_flutter/matchmake.dart';
 
 class SchedulePage extends StatefulWidget {
+  const SchedulePage({super.key});
+
   @override
   _SchedulePageState createState() => _SchedulePageState();
 }
@@ -46,7 +48,7 @@ class _SchedulePageState extends State<SchedulePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Text(
               'Upcoming Matches',
               style: TextStyle(
@@ -64,42 +66,46 @@ class _SchedulePageState extends State<SchedulePage> {
 
                 return Card(
                   color: const Color.fromARGB(255, 230, 245, 254),
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0), 
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: ListTile(
                     title: Text(
-                      '${_formatDate(matchDateTime)}',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                      _formatDate(matchDateTime),
+                      style: const TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Player Name: ${match['playerName']}',
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(fontSize: 16.0),
                         ),
                         Text(
                           'Sport: ${match['sport']}',
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(fontSize: 16.0),
                         ),
                         Text(
                           'Rank: ${match['rank']}',
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(fontSize: 16.0),
                         ),
                       ],
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              backgroundColor: const Color.fromARGB(255, 230, 245, 254),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 230, 245, 254),
                               title: const Text('Confirm Deletion'),
-                              content: const Text('Are you sure you want to delete this match? The match will be cancelled and will be removed from your schedule'),
+                              content: const Text(
+                                  'Are you sure you want to delete this match? The match will be cancelled and will be removed from your schedule'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -107,7 +113,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                   },
                                   child: const Text(
                                     'Cancel',
-                                    style: TextStyle(color: Colors.black),  
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                 ),
                                 TextButton(
@@ -119,7 +125,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                   },
                                   child: const Text(
                                     'Confirm Deletion',
-                                    style: TextStyle(color: Colors.red), 
+                                    style: TextStyle(color: Colors.red),
                                   ),
                                 ),
                               ],
@@ -209,14 +215,14 @@ class _SchedulePageState extends State<SchedulePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MatchmakingPage()),
+                MaterialPageRoute(
+                    builder: (context) => const MatchmakingPage()),
               );
             },
             label: const Text(
-                  'Find A New Match!',
-                  style: TextStyle(color: Color.fromARGB(255, 2, 38, 63)),
-                ),
-
+              'Find A New Match!',
+              style: TextStyle(color: Color.fromARGB(255, 2, 38, 63)),
+            ),
             icon: const Icon(Icons.add),
             backgroundColor: const Color.fromARGB(255, 230, 245, 254),
             tooltip: 'Add Availability',
