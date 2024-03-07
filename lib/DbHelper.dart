@@ -173,4 +173,56 @@ class DbHelper{
     ''');
   }
 
+  Future<List<Map<String, dynamic>>> getPastMatches() async {
+    Database db = await instance.database;
+    return await db.query(
+      'match',
+      where: 'gameResult = ?',
+      whereArgs: ['awaiting result'],
+    );
+  }
+
+Future<void> updateGameResult(String tableName, int matchId, String result) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE $tableName
+    SET gameResult = '$result'
+    WHERE id = $matchId
+  ''');
+}
+
+Future<void> updateMatchElo(int matchId, double homeElo, double awayElo) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE 'match'
+    SET homeElo = $homeElo, awayElo = $awayElo
+    WHERE id = $matchId
+  ''');
+}
+
+Future<void> printUpdatedMatch(int matchId) async {
+  Database db = await instance.database;
+  List<Map<String, dynamic>> rows = await db.query(
+    'match',
+    where: 'id = ?',
+    whereArgs: [matchId],
+  );
+  if (rows.isNotEmpty) {
+    Map<String, dynamic> match = rows.first;
+    print('Updated Match:');
+    print('ID: ${match['id']}');
+    print('Sport: ${match['sport']}');
+    print('DateTime: ${match['dateTime']}');
+    print('Location: ${match['location']}');
+    print('Home Name: ${match['homeName']}');
+    print('Away Name: ${match['awayName']}');
+    print('Home Elo: ${match['homeElo']}');
+    print('Home Predicted Result: ${match['homePredictedResult']}');
+    print('Away Elo: ${match['awayElo']}');
+    print('Away Predicted Result: ${match['awayPredictedResult']}');
+    print('Game Result: ${match['gameResult']}');
+  } else {
+    print('Match not found');
+  }
+}
 }

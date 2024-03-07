@@ -37,7 +37,9 @@ class Matchmake {
 
         double resultValue = gameResult == "win" ? 1 : gameResult == "draw" ? 0.5 : 0;
 
-        double newElo = elo * (resultValue - expectedResult);
+        double eloCalc = elo * (resultValue - expectedResult);
+
+        double newElo = elo + eloCalc;
 
         return newElo;
     }
