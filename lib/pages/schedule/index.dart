@@ -6,7 +6,7 @@ class Schedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-return MaterialApp(
+    return MaterialApp(
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
@@ -36,7 +36,7 @@ return MaterialApp(
           ),
         ),
       ),
-      home: SchedulePage(),
+      home: const SchedulePage(),
     );
   }
 }

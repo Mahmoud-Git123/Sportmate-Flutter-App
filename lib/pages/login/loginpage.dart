@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/JSON%20models/user_model.dart';
-import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
 class LoginPage extends StatefulWidget {

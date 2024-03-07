@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/DbTest.dart';
-import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(SportMate());
+  runApp(const SportMate());
 }
 
 class SportMate extends StatelessWidget {
