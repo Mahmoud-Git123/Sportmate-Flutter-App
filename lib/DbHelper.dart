@@ -46,7 +46,7 @@ class DbHelper{
     await db.execute('''
       CREATE TABLE availability(
         id INTEGER PRIMARY KEY,
-        email TEXT,
+        userName TEXT,
         dateTime DATETIME,
         sport TEXT
       )
@@ -163,14 +163,41 @@ class DbHelper{
     return await db.query(tableName, where: '$column BETWEEN ? AND ?', whereArgs: [lower, upper]);
   }
 
-  Future<List<Map<String, dynamic>>> joinUserAndAvailability(double lowerElo, double upperElo, String dateTime) async {
+  Future<List<Map<String, dynamic>>> joinUserAndAvailability(double lowerElo, double upperElo, String dateTime, String excludedUsername) async {
     Database db = await instance.database;
     return await db.rawQuery('''
     SELECT user.userName, user.elo, availability.dateTime, availability.sport FROM user
-    INNER JOIN availability ON user.email = availability.email
-    WHERE user.elo BETWEEN $lowerElo AND $upperElo
-    AND availability.dateTime = '$dateTime'
+    INNER JOIN availability ON user.userName = availability.userName
+    WHERE user.elo BETWEEN $lowerElo AND $upperElo AND availability.dateTime = '$dateTime' AND user.userName != '$excludedUsername'
     ''');
+  }
+
+  Future<double> getUserElo(String username) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> rows = await db.query(
+      'user',
+      where: 'userName = ?',
+      whereArgs: [username],
+    );
+    if (rows.isNotEmpty) {
+      return rows.first['elo'];
+    } else {
+      return 0;
+    }
+  }
+
+  Future <String> getUserEmail(String username) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> rows = await db.query(
+      'user',
+      where: 'userName = ?',
+      whereArgs: [username],
+    );
+    if (rows.isNotEmpty) {
+      return rows.first['email'];
+    } else {
+      return '';
+    }
   }
 
   Future<List<Map<String, dynamic>>> getPastMatches() async {
