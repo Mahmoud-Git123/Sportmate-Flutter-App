@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportsmate_flutter/DbHelper.dart';
 import 'schedule_manager.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking.dart';
+import 'package:sportsmate_flutter/matchmake.dart';
 
 class SchedulePage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class SchedulePage extends StatefulWidget {
 class _SchedulePageState extends State<SchedulePage> {
 
   DbHelper dbHelper = DbHelper.instance;
+  Matchmake matchmake = Matchmake();
   List<Map<String, dynamic>> previousMatches = [];
   
   @override
@@ -160,6 +162,10 @@ class _SchedulePageState extends State<SchedulePage> {
                   ElevatedButton(
                     onPressed: () {
                       updateMatchResult(index, 'win');
+                      double newHomeElo = matchmake.postGameEloCalc(match['homeElo'], match['homePredictedResult'], 'win');
+                      double newAwayElo = matchmake.postGameEloCalc(match['awayElo'], match['awayPredictedResult'], 'lose');
+                      dbHelper.updateMatchElo(match['id'], newHomeElo, newAwayElo);
+                      dbHelper.printUpdatedMatch(match['id']);
                       getPreviousMatches();
                       setState(() {});
                     },
@@ -178,6 +184,10 @@ class _SchedulePageState extends State<SchedulePage> {
                   ElevatedButton(
                     onPressed: () {
                       updateMatchResult(index, 'draw');
+                      double newHomeElo = matchmake.postGameEloCalc(match['homeElo'], match['homePredictedResult'], 'draw');
+                      double newAwayElo = matchmake.postGameEloCalc(match['awayElo'], match['awayPredictedResult'], 'lose');
+                      dbHelper.updateMatchElo(match['id'], newHomeElo, newAwayElo);
+                      dbHelper.printUpdatedMatch(match['id']);
                       getPreviousMatches();
                       setState(() {});
                     },
@@ -240,25 +250,5 @@ class _SchedulePageState extends State<SchedulePage> {
     print(e.toString());
   }
 }
-
-// Future<void> addMatch() async {
-//     try {
-//       Map<String, Object> match = {
-//         'sport': 'Football',
-//         'dateTime': '2023/05/07 12:00:00',
-//         'location': 'London',
-//         'homeName': 'Anthony',
-//         'awayName': 'Rhys',
-//         'homeElo': 200,
-//         'homePredictedResult': 0.5,
-//         'awayElo': 200,
-//         'awayPredictedResult': 0.5,
-//         'gameResult': 'awaiting result'
-//       };
-//       await dbHelper.insertToTable('match', match as Map<String, Object>);
-//     } catch (e) {
-      
-//     }
-//   }
 
 }
