@@ -18,3 +18,7 @@ use "await" in the function call (this means you will need to make sure that the
                     'phone': '45928237758',
                     'elo': 200,
                   }; "
+
+
+  to get username:
+  final username = Provider.of<UsernameProvider>(context, listen: false).username;
