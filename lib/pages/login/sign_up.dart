@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/pages/login/sign_up_sport.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -8,11 +9,15 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
+
+
 class _SignUpPageState extends State<SignUpPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
+  final confirmPassword = TextEditingController();
+
+  DbHelper dbHelper = DbHelper.instance;
 
   bool isVisible = true;
 
@@ -151,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
 
-                  //phone number field 
+                  // confirm password field 
                   Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.symmetric(
@@ -161,12 +166,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: const Color.fromARGB(255, 183, 208, 246),
                     ),
                     child: TextFormField(
-                      controller: phoneController,
-                      //validating empty fields
+                      controller: confirmPassword,
+                      //validating empty fields and whether password and confirm password match 
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "please confirm password";
-                        }
+                          return "password is required";
+                        } else if (passwordController.text != confirmPassword.text) {
+                          return "passwords don't match";
+                        }                        
                         return null;
                       },
 
@@ -185,18 +192,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
 
-                  //continue button
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUpSportPage(),
-                        )),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                  //sign up button
+                  Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width * .9,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
                               colors: [
                                 Color.fromARGB(255, 2, 133, 217),
                                 Color.fromARGB(255, 2, 38, 63),
@@ -208,28 +211,80 @@ class _SignUpPageState extends State<SignUpPage> {
                               //begin: Alignment.bottomLeft,
                               //end: Alignment.topRight,
                               transform: GradientRotation(0.5)),
-                          borderRadius: BorderRadius.circular(205),
+                          borderRadius: BorderRadius.circular(200)),
+                      child: TextButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            //checks if the username already exists
+                            bool usernameExist = await dbHelper.doesUsernameExist('user', nameController.text);
+                            bool emailExist = await dbHelper.isEmailInUse('user', emailController.text);
+                            //checks if username is taken and if email is in use
+                            if(usernameExist == false && emailExist == false) {
+                              bool isEmailValid = isValidEmail(emailController.text);
+                              //checks if email is valid
+                              if(isEmailValid == true) {
+                                //if the username is not taken and email is not in use, insert users sign up information into database 
+                                Map<String, Object> signUpUser = {
+                                  'userName': nameController.text,
+                                  'email': emailController.text,
+                                  'password': confirmPassword.text,
+                                  'elo': 100,
+                                };
+                                await dbHelper.insertToTable('user', signUpUser);
+                                //then goes to login page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const LoginPage()),
+                                  );
+                                } else {
+                                  showErrorMessage(context, "Please enter valid email");
+                                }                                                        
+                            } else {
+                              //show error message if username does exist
+                              showErrorMessage(context, "Username or email is already in use");
+                            }                     
+                          }
+                        },
+                        child: const Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                              color: Color.fromARGB(235, 254, 254, 254)),
                         ),
-                        padding: const EdgeInsets.all(15),
-                        child: const Center(
-                          child: Text(
-                            "Continue",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Poppins',
-                                fontSize: 20),
-                          ),
-                        )),
-                  ),
+                      ),
+                    ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                 ],
               ),
               )
-              
             ),
           ),
           )          
         ));
   }
+  
+  //method for error message
+  void showErrorMessage(BuildContext context, String errorMessage) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          errorMessage,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  //checks whether email it valid
+  bool isValidEmail(String email) {
+    // This regex allows for most common email formats but may not cover all edge cases
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    return emailRegex.hasMatch(email);
+  }
+
 }
+
+

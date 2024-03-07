@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   final passWordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  DbHelper dbHelper = DbHelper.instance;
 
   bool isVisible = true;
   bool isLoginTrue = false;
@@ -150,8 +154,32 @@ class _LoginPageState extends State<LoginPage> {
                           color: const Color.fromARGB(255, 22, 18, 154),
                           borderRadius: BorderRadius.circular(200)),
                       child: TextButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {}
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            String inputUsername = usernameController.text;
+                            String inputPassword = passWordController.text;
+                            String? databasePassword = await dbHelper
+                                .getPasswordByUsername('user', inputUsername);
+                            bool usernameExist = await dbHelper
+                                .doesUsernameExist('user', inputUsername);
+                            //check if username exists in database
+                            if (usernameExist == true) {
+                              //if username exists, check if password is correct
+                              if (databasePassword == inputPassword) {
+                                //if password is correct, go to navigationPage
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Navigation()),
+                                );
+                              } else {
+                                //if password is incorrect, show error message
+                                showErrorMessage(context, "Password incorrect");
+                              }
+                            } else {
+                              showErrorMessage(context, "Incorrect username");
+                            }
+                          }
                         },
                         child: const Text(
                           "LOGIN",
@@ -180,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()),
+                                builder: (context) => const SignUpPage()),
                           );
                         },
                         child: const Text(
@@ -199,6 +227,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )),
         ),
+      ),
+    );
+  }
+
+  //method for error message
+  void showErrorMessage(BuildContext context, String errorMessage) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          errorMessage,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
       ),
     );
   }

@@ -44,8 +44,8 @@ class DbTest extends StatelessWidget {
                 onPressed: () async {
                   DbHelper dbHelper = DbHelper.instance;
                   Map<String, Object> testAvailability = {
-                    'date': '12/04/2022',
-                    'time': '12:00',
+                    'email': 'emily@gmail.com',
+                    'dateTime': '2024/04/12 12:00:00',
                     'sport': 'Tennis',
                   };
 
@@ -66,8 +66,7 @@ class DbTest extends StatelessWidget {
                   DbHelper dbHelper = DbHelper.instance;
                   Map<String, Object> testMatch = {
                     'sport': 'Tennis',
-                    'date': '12/04/2022',
-                    'time': '12:00',
+                    'dateTime': '2024/04/12 12:00:00',
                     'location': 'London',
                     'homeName': 'Emily',
                     'awayName': 'John',

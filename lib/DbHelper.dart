@@ -46,8 +46,8 @@ class DbHelper{
     await db.execute('''
       CREATE TABLE availability(
         id INTEGER PRIMARY KEY,
-        date TEXT,
-        time TEXT,
+        email TEXT,
+        dateTime DATETIME,
         sport TEXT
       )
     ''');
@@ -56,8 +56,7 @@ class DbHelper{
       CREATE TABLE match(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sport TEXT,
-        date TEXT,
-        time TEXT,
+        dateTime DATETIME,
         location TEXT,
         homeName TEXT,
         awayName TEXT,
@@ -87,7 +86,7 @@ class DbHelper{
 }
 
   
-  // insets into a table spceified by the params (name of table in '' and data in a map)
+  // inserts into a table spceified by the params (name of table in '' and data in a map)
   Future<int> insertToTable(String tableName, Map<String, Object> data) async {
     Database db = await instance.database;
     return await db.insert(tableName, data);
@@ -99,4 +98,131 @@ class DbHelper{
     return await db.query(tableName);
   }
 
+
+  // Method to get a row from the table based on the username
+  Future<Map<String, dynamic>?> getRowByUsername(String tableName, String username) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> rows = await db.query(
+      tableName,
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+    // If rows are returned, return the first row, otherwise return null
+    return rows.isNotEmpty ? rows.first : null;
+  }
+
+  // Method to access the password field of the row returned by getRowByUsername
+  Future<String?> getPasswordByUsername(String tableName, String username) async {
+    // Get the row based on the username
+    Map<String, dynamic>? row = await getRowByUsername(tableName, username); 
+    // If the row is not null and contains a 'password' field, return the password
+    if (row != null && row.containsKey('password')) {
+      return row['password'] as String?;
+    } else {
+      return null;
+    }
+  }
+
+  // Method to check if a username exists in the database
+  Future<bool> doesUsernameExist(String tableName, String username) async {
+    // Get the row based on the username
+    Map<String, dynamic>? row = await getRowByUsername(tableName, username);
+    // If the row is not null, return true indicating that the username exists
+    return row != null;
+  }
+
+  Future<Map<String, dynamic>?> getRowByEmail(String tableName, String email) async {
+    Database db = await instance.database;
+    // Perform a database query to fetch the row based on the email
+    List<Map<String, dynamic>> rows = await db.query(
+      tableName, // Assuming 'users' is the table name
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+    // Return the first row if found, otherwise return null
+    return rows.isNotEmpty ? rows.first : null;
+  }
+
+  // Method to check if an email is already in use
+  Future<bool> isEmailInUse(String tableName, String email) async {
+    // Get the row based on the email
+    Map<String, dynamic>? row = await getRowByEmail(tableName, email);
+    // If the row is not null, return true indicating that the email is already in use
+    return row != null;
+  }
+
+  // returns all rows from a specific table where a column has a specific value
+  Future <List<Map<String, dynamic>>> getRowsWhere(String tableName, String column, String value) async {
+    Database db = await instance.database;
+    return await db.query(tableName, where: '$column = ?', whereArgs: [value]);
+  }
+
+  // returns all rows from a specific table where a column has a value between two values
+  Future<List<Map<String, dynamic>>> getRowsWhereBetween(String tableName, String column, double lower, double upper) async {
+    Database db = await instance.database;
+    return await db.query(tableName, where: '$column BETWEEN ? AND ?', whereArgs: [lower, upper]);
+  }
+
+  Future<List<Map<String, dynamic>>> joinUserAndAvailability(double lowerElo, double upperElo, String dateTime) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    SELECT user.userName, user.elo, availability.dateTime, availability.sport FROM user
+    INNER JOIN availability ON user.email = availability.email
+    WHERE user.elo BETWEEN $lowerElo AND $upperElo
+    AND availability.dateTime = '$dateTime'
+    ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getPastMatches() async {
+    Database db = await instance.database;
+    return await db.query(
+      'match',
+      where: 'gameResult = ?',
+      whereArgs: ['awaiting result'],
+    );
+  }
+
+Future<void> updateGameResult(String tableName, int matchId, String result) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE $tableName
+    SET gameResult = '$result'
+    WHERE id = $matchId
+  ''');
+}
+
+Future<void> updateMatchElo(int matchId, double homeElo, double awayElo) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE 'match'
+    SET homeElo = $homeElo, awayElo = $awayElo
+    WHERE id = $matchId
+  ''');
+}
+
+Future<void> printUpdatedMatch(int matchId) async {
+  Database db = await instance.database;
+  List<Map<String, dynamic>> rows = await db.query(
+    'match',
+    where: 'id = ?',
+    whereArgs: [matchId],
+  );
+  if (rows.isNotEmpty) {
+    Map<String, dynamic> match = rows.first;
+    print('Updated Match:');
+    print('ID: ${match['id']}');
+    print('Sport: ${match['sport']}');
+    print('DateTime: ${match['dateTime']}');
+    print('Location: ${match['location']}');
+    print('Home Name: ${match['homeName']}');
+    print('Away Name: ${match['awayName']}');
+    print('Home Elo: ${match['homeElo']}');
+    print('Home Predicted Result: ${match['homePredictedResult']}');
+    print('Away Elo: ${match['awayElo']}');
+    print('Away Predicted Result: ${match['awayPredictedResult']}');
+    print('Game Result: ${match['gameResult']}');
+  } else {
+    print('Match not found');
+  }
+}
 }
