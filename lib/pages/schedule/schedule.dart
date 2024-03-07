@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
 import 'schedule_manager.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking.dart';
 
@@ -8,6 +9,18 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
+
+  DbHelper dbHelper = DbHelper.instance;
+  List<Map<String, dynamic>> previousMatches = [];
+  
+  @override
+  void initState() {
+    super.initState();
+    getPreviousMatches();
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,6 +131,65 @@ class _SchedulePageState extends State<SchedulePage> {
               },
             ),
           ),
+          const Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Previous Matches',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+        itemCount: previousMatches.length,
+        itemBuilder: (context, index) {
+          Map<String, dynamic> match = previousMatches[index];
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blue),
+            ),
+            child: ListTile(
+              title: Text('${match['sport']} match against ${match['awayName']}'),
+              subtitle: Text('Date: ${match['dateTime']} result: ${match['gameResult']}'),
+              
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      updateMatchResult(index, 'win');
+                      getPreviousMatches();
+                      setState(() {});
+                    },
+                    child: Text('Win'),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      updateMatchResult(index, 'lose');
+                      getPreviousMatches();
+                      setState(() {});
+                    },
+                    child: Text('Lose'),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      updateMatchResult(index, 'draw');
+                      getPreviousMatches();
+                      setState(() {});
+                    },
+                    child: Text('Draw'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+          )
         ],
       ),
       floatingActionButton: Row(
@@ -147,4 +219,46 @@ class _SchedulePageState extends State<SchedulePage> {
   String _formatDate(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
   }
+
+  Future<void> getPreviousMatches() async {
+    try {
+      List<Map<String, dynamic>> matches = await dbHelper.getPastMatches();
+      setState(() {
+        previousMatches = matches;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> updateMatchResult(int index, String result) async {
+  try {
+    Map<String, dynamic> match = Map<String, dynamic>.from(previousMatches[index]);
+    match['gameResult'] = result;
+    await dbHelper.updateGameResult('match', match['id'], result);
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
+// Future<void> addMatch() async {
+//     try {
+//       Map<String, Object> match = {
+//         'sport': 'Football',
+//         'dateTime': '2023/05/07 12:00:00',
+//         'location': 'London',
+//         'homeName': 'Anthony',
+//         'awayName': 'Rhys',
+//         'homeElo': 200,
+//         'homePredictedResult': 0.5,
+//         'awayElo': 200,
+//         'awayPredictedResult': 0.5,
+//         'gameResult': 'awaiting result'
+//       };
+//       await dbHelper.insertToTable('match', match as Map<String, Object>);
+//     } catch (e) {
+      
+//     }
+//   }
+
 }

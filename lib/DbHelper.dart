@@ -173,4 +173,21 @@ class DbHelper{
     ''');
   }
 
+  Future<List<Map<String, dynamic>>> getPastMatches() async {
+    Database db = await instance.database;
+    return await db.query(
+      'match',
+      where: 'gameResult = ?',
+      whereArgs: ['awaiting result'],
+    );
+  }
+
+Future<void> updateGameResult(String tableName, int matchId, String result) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE $tableName
+    SET gameResult = '$result'
+    WHERE id = $matchId
+  ''');
+}
 }
