@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 import 'package:sportsmate_flutter/pages/schedule/schedule.dart';
+import 'package:sportsmate_flutter/userName.dart';
 import 'edit_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -7,6 +11,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final username = Provider.of<UsernameProvider>(context, listen: false).username;
+    String email = Provider.of<UsernameProvider>(context).email;
+    DbHelper dbHelper = DbHelper.instance;
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -39,8 +46,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const Text('John Doe'),
-            const Text('johndoe@example.com'),
+            Text(username),
+            Text(email),
             const SizedBox(height: 20),
             SizedBox(
               width: 200,
@@ -132,6 +139,14 @@ class ProfileScreen extends StatelessWidget {
                                 TextButton(
                                   onPressed: () {
                                     // logic for logging out the user goes here
+                                    Provider.of<UsernameProvider>(context, listen: false).reset();
+                                    Navigator.of(context).pop(); // Close the dialog
+                                                    Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => LoginPage(),
+                                                      ),
+                                                    );
                                   },
                                   child: const Text('Logout'),
                                 )

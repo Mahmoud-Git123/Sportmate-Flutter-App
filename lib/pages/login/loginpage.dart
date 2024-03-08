@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sportsmate_flutter/DbHelper.dart';
 import 'package:sportsmate_flutter/pages/index.dart';
 import 'package:sportsmate_flutter/pages/login/sign_up.dart';
+import 'package:sportsmate_flutter/userName.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -166,6 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (usernameExist == true) {
                               //if username exists, check if password is correct
                               if (databasePassword == inputPassword) {
+                                Provider.of<UsernameProvider>(context, listen: false).username = inputUsername;
                                 //if password is correct, go to navigationPage
                                 Navigator.push(
                                   context,

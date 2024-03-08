@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sportsmate_flutter/DbHelper.dart';
 import 'package:sportsmate_flutter/matchmake.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation.dart';
+import 'package:sportsmate_flutter/userName.dart';
 
 class MatchingUsers extends StatelessWidget {
   final DateTime? selectedDateTime;
@@ -45,7 +47,7 @@ class MatchingUsers extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Players available at ${selectedDateTime!.toLocal()} in $location for $selectedSport:',
+              'Players available at ${selectedDateTime!} in $location for $selectedSport:',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -69,19 +71,20 @@ class MatchingUsers extends StatelessWidget {
                               dateTime: selectedDateTime!, // Provide selectedDateTime here
                               sport: selectedSport!, // Provide selectedSport here
                               rank: m.getRank(player['elo']), // Provide player rank here
-                              onMatchConfirmed: () {
+                              onMatchConfirmed: () async {
                                 // Handle match confirmation logic here
                                 DbHelper dbHelper = DbHelper.instance;
+                                final username = Provider.of<UsernameProvider>(context, listen: false).username;
                                 Map<String, Object> newMatch = {
                                   'sport': '$selectedSport',
                                   'dateTime': '$selectedDateTime',
                                   'location': '$location',
-                                  'homeName': 'Emily', // needs changing to user's name
+                                  'homeName': username, 
                                   'awayName': '${player['userName']}', 
-                                  'homeElo': 200, // needs changing to user's elo
-                                  'homePredictedResult': m.expectedResultCalc(200, player['elo']),
+                                  'homeElo': dbHelper.getUserElo(username), // needs changing to user's elo
+                                  'homePredictedResult': m.expectedResultCalc(await dbHelper.getUserElo(username), player['elo']),
                                   'awayElo': player['elo'],
-                                  'awayPredictedResult': m.expectedResultCalc(player['elo'], 200),
+                                  'awayPredictedResult': m.expectedResultCalc(player['elo'], await dbHelper.getUserElo(username)),
                                   'gameResult': 'pending',
                                 };
                                 dbHelper.insertToTable('match', newMatch);

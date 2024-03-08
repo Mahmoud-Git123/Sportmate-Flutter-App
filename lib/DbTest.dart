@@ -24,10 +24,17 @@ class DbTest extends StatelessWidget {
                     'userName': 'Emily',
                     'email': 'emily@gmail.com',
                     'password': 'oaishd',
-                    'elo': 200,
+                    'elo': 100,
+                  };
+                  Map<String, Object> testUser2 = {
+                    'userName': 'John',
+                    'email': 'john@gmail.com',
+                    'password': 'oaishd',
+                    'elo': 100,
                   };
 
                 await dbHelper.insertToTable('user', testUser);
+                await dbHelper.insertToTable('user', testUser2);
                 },
                 child: const Text('Insert test data'),
               ), // test insert 
@@ -44,12 +51,17 @@ class DbTest extends StatelessWidget {
                 onPressed: () async {
                   DbHelper dbHelper = DbHelper.instance;
                   Map<String, Object> testAvailability = {
-                    'email': 'emily@gmail.com',
-                    'dateTime': '2024/04/12 12:00:00',
+                    'userName': 'Emily',
+                    'dateTime': '2025-01-01 12:00:00:00',
                     'sport': 'Tennis',
                   };
-
+                  Map<String, Object> testAvailability2 = {
+                    'userName': 'John',
+                    'dateTime': '2025-01-01 12:00:00:00',
+                    'sport': 'Tennis',
+                  };
                   await dbHelper.insertToTable('availability', testAvailability);
+                  await dbHelper.insertToTable('availability', testAvailability2);
                 },
                 child: const Text('Availibility test'), 
               ), // query

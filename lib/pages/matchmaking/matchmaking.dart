@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_users.dart';
 import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/userName.dart';
 
 class MatchmakingPage extends StatefulWidget {
   const MatchmakingPage({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
     'Badminton',
     'Cricket',
   ];
+
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -154,14 +157,19 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                       selectedDateTime != null) {
 
                     // Add availability to database
-                    Map<String, Object> testAvailability = {
-                    'email': 'emily@gmail.com', // needs to be changed to current users email
+                    final username = Provider.of<UsernameProvider>(context, listen: false).username;
+                    Map<String, Object> availability = {
+                    'userName': '$username', 
                     'dateTime': selectedDateTime.toString(),
                     'sport': selectedSport.toString(),
                   };
-                  dbHelper.insertToTable('availability', testAvailability);
+                  dbHelper.insertToTable('availability', availability);
 
-                  List<Map<String, dynamic>> availableUsers = await dbHelper.joinUserAndAvailability(200 - 100, 200 + 100, selectedDateTime.toString());
+                  final userElo = await dbHelper.getUserElo(username);
+                  List<Map<String, dynamic>> availableUsers = await dbHelper.joinUserAndAvailability(userElo - 100, userElo + 100, selectedDateTime.toString(), username);
+
+                  print(await dbHelper.getAllRows("availability"));
+                  print(selectedDateTime);
 
                     Navigator.push(
                       context,
