@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/pages/groups/create_group.dart';
 import 'package:sportsmate_flutter/pages/groups/group_feed.dart';
 
 class Group {
@@ -44,10 +45,36 @@ class Groups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 230, 245, 253),
+          foregroundColor: Color.fromARGB(255, 234, 234, 234),
+          titleTextStyle: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 2, 38, 63),
+            fontSize: 20,
+          ),
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Your Groups"),
-          backgroundColor: Colors.blue, // Set the app bar color
+          title: const Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text("Your Groups")
+          ),
+          leading:Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Transform.scale(
+                scale: 2.5,
+                child: Image.asset('lib/images/sportmateLogo.png')
+              ),
+            ),
+          ),
         ),
         body: Column(
           children: [
@@ -77,15 +104,19 @@ class Groups extends StatelessWidget {
             // Add the "Create New +" button
             ElevatedButton(
               onPressed: () {
-                // Handle button press
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateGroupPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Set button color
+                backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
               ),
               child: const Text(
                 "Create New +",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 2, 48, 63),
                 ),
               ),
             ),
