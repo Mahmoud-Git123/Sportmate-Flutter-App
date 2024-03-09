@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation';
+import 'package:provider/provider.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/matchmake.dart';
+import 'package:sportsmate_flutter/pages/matchmaking/matchmaking_confirmation.dart';
+import 'package:sportsmate_flutter/userName.dart';
 
 class MatchingUsers extends StatelessWidget {
   final DateTime? selectedDateTime;
   final String? location;
   final String? selectedSport;
+  final List<Map<String, dynamic>> matchingPlayers;
 
-  const MatchingUsers({super.key, 
+  const MatchingUsers({
+    Key? key,
     required this.selectedDateTime,
     required this.location,
     required this.selectedSport,
-  });
+    required this.matchingPlayers,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> matchingPlayers = [
-      {'name': 'Player 1', 'rank': 'Diamond 3'},
-      {'name': 'Player 2', 'rank': 'Diamond 1'},
-      {'name': 'Player 3', 'rank': 'Diamond 2'},
-    ];
+
+    Matchmake m = Matchmake();
 
     return Scaffold(
-            appBar: AppBar(
+      appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
           child: Text('Matching Players...'),
@@ -43,7 +47,7 @@ class MatchingUsers extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Players available at ${selectedDateTime!.toLocal()} in $location for $selectedSport:',
+              'Players available at ${selectedDateTime!} in $location for $selectedSport:',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -53,9 +57,9 @@ class MatchingUsers extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final player = matchingPlayers[index];
                   return ListTile(
-                    title: Text('${player['name']}',
+                    title: Text('${player['userName']}',
                         style: Theme.of(context).textTheme.bodyMedium),
-                    subtitle: Text('${player['rank']}',
+                    subtitle: Text('${m.getRank(player['elo'])}',
                         style: Theme.of(context).textTheme.titleMedium),
                     trailing: ElevatedButton(
                       onPressed: () {
@@ -63,7 +67,28 @@ class MatchingUsers extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => MatchmakingConfirmation(
-                              playerName: player['name'],
+                              playerName: player['userName'],
+                              dateTime: selectedDateTime!, // Provide selectedDateTime here
+                              sport: selectedSport!, // Provide selectedSport here
+                              rank: m.getRank(player['elo']), // Provide player rank here
+                              onMatchConfirmed: () async {
+                                // Handle match confirmation logic here
+                                DbHelper dbHelper = DbHelper.instance;
+                                final username = Provider.of<UsernameProvider>(context, listen: false).username;
+                                Map<String, Object> newMatch = {
+                                  'sport': '$selectedSport',
+                                  'dateTime': '$selectedDateTime',
+                                  'location': '$location',
+                                  'homeName': username, 
+                                  'awayName': '${player['userName']}', 
+                                  'homeElo': dbHelper.getUserElo(username), // needs changing to user's elo
+                                  'homePredictedResult': m.expectedResultCalc(await dbHelper.getUserElo(username), player['elo']),
+                                  'awayElo': player['elo'],
+                                  'awayPredictedResult': m.expectedResultCalc(player['elo'], await dbHelper.getUserElo(username)),
+                                  'gameResult': 'pending',
+                                };
+                                dbHelper.insertToTable('match', newMatch);
+                              }
                             ),
                           ),
                         );

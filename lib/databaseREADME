@@ -1,7 +1,24 @@
-This is a little cheatsheet to help with using the database interface within your code.
+How to use database helper
 
-1.On your emulated device, the database may not exist, and may not contain any tables yet. To fix this call the initializeDatabase function, "await DatabaseManager.initializeDatabase();" in main after the app starts running "runApp(SportMate());". Run the app once with "flutter run" and then close the app and remove that initialize database function call.
+1 - do "DbHelper dbHelper = DbHelper.instance;"
+This will make an instance of DbHelper that you can use the built in functions for 
 
-2.You should now have the database and tables created on your device. So proceed to uncomment the line "DatabaseManager.openExistingDatabase();" in main.
+2 - Look in DbHelper for required function
+Example use:
+"await dbHelper.insertUser(testUser);"
+use "await" in the function call (this means you will need to make sure that the function is an async but VSC should tell you this)
 
-3.You can now use the functions of each helper class to interact with the table. In the test UI provided I show the interaction with the user table, however the premise works the same for all other tables. Simply make sure you interact with the right helper for the right table, ie. DatabaseHelperUser.<function> for user table, DatabaseHelperAvailability.<function> for Availability table, and so on.
+3 - Insert data in this format:
+" Map<String, Object> testUser = {
+                    'firstname': 'Emily',
+                    'lastname': 'Jones',
+                    'dob': '12/04/2002',
+                    'email': 'emily@gmail.com',
+                    'password': 'oaishd',
+                    'phone': '45928237758',
+                    'elo': 200,
+                  }; "
+
+
+  to get username:
+  final username = Provider.of<UsernameProvider>(context, listen: false).username;

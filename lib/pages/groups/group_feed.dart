@@ -69,7 +69,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Joined",
@@ -83,7 +83,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Invite +",
@@ -102,7 +102,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255,230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Tagged",
@@ -116,7 +116,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Media(photos/videos)",
@@ -130,7 +130,7 @@ class GroupFeedPage extends StatelessWidget {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
                 ),
                 child: const Text(
                   "Events",

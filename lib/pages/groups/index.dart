@@ -111,7 +111,7 @@ class Groups extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 230, 245, 253), // Set button color
+                  backgroundColor: const Color.fromARGB(255, 230, 245, 254),
               ),
               child: const Text(
                 "Create New +",
