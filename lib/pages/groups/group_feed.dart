@@ -8,13 +8,26 @@ class GroupFeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
-      
-    appBar: AppBar(
+    return MaterialApp( 
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 230, 245, 253),
+          foregroundColor: Color.fromARGB(255, 234, 234, 234),
+          titleTextStyle: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 2, 38, 63),
+            fontSize: 20,
+          ),
+        ),
+      ),
+      home: Scaffold(
+      appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.all(18.0),
-          child: Text('Your Groups!'),
+          child: Text("Group Feed"),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(0.0),
@@ -26,6 +39,17 @@ class GroupFeedPage extends StatelessWidget {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +74,7 @@ class GroupFeedPage extends StatelessWidget {
                 child: const Text(
                   "Joined",
                   style: TextStyle(
-                    color: Colors.black
+                    color: Color.fromARGB(255, 2, 48, 63)
                   )
                 ),
               ),
@@ -64,7 +88,7 @@ class GroupFeedPage extends StatelessWidget {
                 child: const Text(
                   "Invite +",
                   style: TextStyle(
-                    color: Colors.black
+                    color: Color.fromARGB(255, 2, 48, 63)
                   )
                 ),
               ),
@@ -83,7 +107,7 @@ class GroupFeedPage extends StatelessWidget {
                 child: const Text(
                   "Tagged",
                   style: TextStyle(
-                    color: Colors.black
+                    color: Color.fromARGB(255, 2, 48, 63)
                   )
                 ),
               ),
@@ -97,7 +121,7 @@ class GroupFeedPage extends StatelessWidget {
                 child: const Text(
                   "Media(photos/videos)",
                   style: TextStyle(
-                    color: Colors.black
+                    color: Color.fromARGB(255, 2, 48, 63)
                   )
                 ),
               ),
@@ -111,7 +135,7 @@ class GroupFeedPage extends StatelessWidget {
                 child: const Text(
                   "Events",
                   style: TextStyle(
-                    color: Colors.black
+                    color: Color.fromARGB(255, 2, 48, 63)
                   )
                 ),
               ),
@@ -163,6 +187,7 @@ class GroupFeedPage extends StatelessWidget {
           ),
         ],
       ),
+      )
     );
   }
 }

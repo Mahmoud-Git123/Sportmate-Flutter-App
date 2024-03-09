@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsmate_flutter/pages/groups/create_group.dart';
 import 'package:sportsmate_flutter/pages/groups/group_feed.dart';
 
 class Group {
@@ -57,39 +58,24 @@ class Groups extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        textTheme: const TextTheme(
-          headline6: TextStyle(
-            fontFamily: 'Poppins',
-          ),
-          bodyText2: TextStyle(
-            fontFamily: 'Poppins',
-          ),
-          button: TextStyle(
-            fontFamily: 'Poppins',
-          ),
-          subtitle1: TextStyle(
-            fontFamily: 'Poppins',
-            fontStyle: FontStyle.italic,
-          ),
-        ),
       ),
       home: Scaffold(
-    appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.all(18.0),
-          child: Text('Your Groups!'),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Transform.scale(
-              scale: 2.5,
-              child: Image.asset('lib/images/sportmateLogo.png'),
+        appBar: AppBar(
+          title: const Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text("Your Groups")
+          ),
+          leading:Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Transform.scale(
+                scale: 2.5,
+                child: Image.asset('lib/images/sportmateLogo.png')
+              ),
             ),
           ),
         ),
-      ),
         body: Column(
           children: [
             const ListTile(
@@ -118,7 +104,11 @@ class Groups extends StatelessWidget {
             // Add the "Create New +" button
             ElevatedButton(
               onPressed: () {
-                // Handle button press
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateGroupPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 230, 245, 254),
@@ -126,7 +116,7 @@ class Groups extends StatelessWidget {
               child: const Text(
                 "Create New +",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 2, 48, 63),
                 ),
               ),
             ),
