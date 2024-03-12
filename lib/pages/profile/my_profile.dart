@@ -141,13 +141,14 @@ class ProfileScreen extends StatelessWidget {
                                     // logic for logging out the user goes here
                                     Provider.of<UsernameProvider>(context, listen: false).reset();
                                     Navigator.of(context).pop(); // Close the dialog
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) => LoginPage(),
-                                                      ),
-                                                    );
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                        ),
+                                    );
                                   },
+                                  
                                   child: const Text('Logout'),
                                 )
                               ],

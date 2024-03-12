@@ -252,4 +252,15 @@ Future<void> printUpdatedMatch(int matchId) async {
     print('Match not found');
   }
 }
+
+
+Future<void> updateProfile(String tableName, String columnName, String newValue, String userName) async{
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE $tableName
+    SET $columnName = '$newValue'
+    WHERE userName = '$userName'
+  ''');
+}
+
 }
