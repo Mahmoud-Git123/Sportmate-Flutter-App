@@ -263,4 +263,13 @@ Future<void> updateProfile(String tableName, String columnName, String newValue,
   ''');
 }
 
+Future<void> updateElo(String username, double newElo) async {
+  Database db = await instance.database;
+  await db.rawQuery('''
+    UPDATE user
+    SET elo = $newElo
+    WHERE userName = '$username'
+  ''');
+}
+
 }
