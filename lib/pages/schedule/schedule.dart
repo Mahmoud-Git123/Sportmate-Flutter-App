@@ -193,6 +193,8 @@ class _SchedulePageState extends State<SchedulePage> {
                       double newHomeElo = matchmake.postGameEloCalc(match['homeElo'], match['homePredictedResult'], 'draw');
                       double newAwayElo = matchmake.postGameEloCalc(match['awayElo'], match['awayPredictedResult'], 'lose');
                       dbHelper.updateMatchElo(match['id'], newHomeElo, newAwayElo);
+                      dbHelper.updateElo(match['homeName'], newHomeElo);
+                      dbHelper.updateElo(match['awayName'], newAwayElo);
                       dbHelper.printUpdatedMatch(match['id']);
                       getPreviousMatches();
                       setState(() {});
