@@ -26,6 +26,16 @@ void showExistsMessage(BuildContext context, String changed) {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
+void showInvalidEmailMessage(BuildContext context) {
+  final snackBar = SnackBar(
+    content: Text('Enter a valid email address'),
+    duration: Duration(seconds: 5),
+    backgroundColor: Colors.red,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
   void showPasswordErrorMessage(BuildContext context) {
     final snackBar = SnackBar(
       content: Text('Passwords Do Not Match'),
@@ -36,11 +46,18 @@ void showExistsMessage(BuildContext context, String changed) {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
+bool isValidEmail(String email) {
+    // This regex allows for most common email formats but may not cover all edge cases
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     
-    final currentUsername = Provider.of<UsernameProvider>(context, listen: false).username;
-    final currentEmail = Provider.of<UsernameProvider>(context, listen: false).email;
+    var currentUsername = Provider.of<UsernameProvider>(context, listen: false).username;
+    var currentEmail = Provider.of<UsernameProvider>(context, listen: false).email;
 
     final usernameController = TextEditingController();
     final emailController = TextEditingController();
@@ -113,6 +130,7 @@ void showExistsMessage(BuildContext context, String changed) {
                   }
                   else{
                   dbHelper.updateProfile('user', 'userName', usernameController.text, '$currentUsername');
+                  currentUsername = usernameController.text;
                   Provider.of<UsernameProvider>(context, listen: false).reset();
                   Provider.of<UsernameProvider>(context, listen: false).username = usernameController.text;        
                   showSuccessMessage(context, 'Username');
@@ -125,10 +143,13 @@ void showExistsMessage(BuildContext context, String changed) {
                   if (emailExist){
                     showExistsMessage(context, 'Email');
                   }
+                  else if (!isValidEmail(emailController.text)){
+                    showInvalidEmailMessage(context);
+                  }
                   else{
-                  dbHelper.updateProfile('user', 'email', emailController.text, '$currentEmail');
+                  dbHelper.updateProfile('user', 'email', emailController.text, '$currentUsername');
                   Provider.of<UsernameProvider>(context, listen: false).reset();
-                  Provider.of<UsernameProvider>(context, listen: false).username = usernameController.text;
+                  Provider.of<UsernameProvider>(context, listen: false).username = currentUsername;
                   showSuccessMessage(context, 'Email');
                   }
                 }
