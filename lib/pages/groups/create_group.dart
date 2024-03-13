@@ -49,51 +49,66 @@ class CreateGroupPage extends StatelessWidget {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                "Group Details",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Group Name",
-                  border: OutlineInputBorder(),
+        body: Container(
+          decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+            Color.fromARGB(255, 2, 135, 217),
+            Color.fromARGB(255, 255, 255, 255),
+          ],
+              stops: [
+            0.0,
+            0.7
+          ],
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              transform: GradientRotation(0.5))),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  "Group Details",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                maxLines: null,
-                decoration: const InputDecoration(
-                  labelText: "Group Description",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DefaultGroupPage(),
-                    )
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 230, 245, 253),
-                ),
-                child: const Text(
-                  "Create Group +",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 2, 47, 63),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: "Group Name",
+                    border: OutlineInputBorder(),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                TextFormField(
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    labelText: "Group Description",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DefaultGroupPage(),
+                      )
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 230, 245, 253),
+                  ),
+                  child: const Text(
+                    "Create Group +",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 2, 47, 63),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

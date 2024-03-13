@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/matchmake.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 import 'package:sportsmate_flutter/pages/schedule/schedule.dart';
 import 'package:sportsmate_flutter/userName.dart';
 import 'edit_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final username = Provider.of<UsernameProvider>(context, listen: false).username;
     String email = Provider.of<UsernameProvider>(context).email;
-
-    DbHelper dbHelper = DbHelper.instance;
-
+    Future<double> elo = getUserElo(username);
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -58,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 25,
                   backgroundColor: Color.fromARGB(255, 230, 245, 254),
-                  child: Image.asset('lib/images/sportmateLogo.png'),
+                  child: Image.asset('lib/images/batman.png'),
                 ),
               ),
               const SizedBox(height: 10),
@@ -69,8 +73,6 @@ class ProfileScreen extends StatelessWidget {
                 width: 200,
                 child: ElevatedButton(
                   onPressed: () {
-                    // implement Edit profile logic here
-                    // should open new page that allows user to edit account details
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -89,88 +91,116 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 30),
               const Divider(),
               const SizedBox(height: 10),
+
+              const Divider(),
         
               // MENU
-              Column(
-                children: [
-                  _buildMenuButton(
-                      text: 'Your Schedule',
-                      icon: Icons.timelapse,
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SchedulePage(),
-                          ),
-                        );
-                      }),
-                  _buildMenuButton(
-                    text: 'Sports Subscriptions',
-                    icon: Icons.sports_soccer,
-                    onPressed: () {},
-                  ),
-                  _buildMenuButton(
-                      text: 'Settings', icon: Icons.settings, onPressed: () {}),
-                  const Divider(),
-                  _buildMenuButton(
-                      text: 'Information',
-                      icon: Icons.info,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Credits"),
-                                content: const Text(
-                                    "Joshua Rowley\nSye Phasuk\nRhys Woods\nKuwsh Okai\nJojo Andoh\nMahmoud Abdelfattah\nStanislaw Nowaczyk"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Close'),
-                                  ),
-                                ],
-                              );
-                            });
-                      }),
-                  _buildMenuButton(
-                      text: 'Logout',
-                      icon: Icons.logout,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Logout"),
-                                content: const Text(
-                                    "Are you sure you want to logout?"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      // logic for logging out the user goes here
-                                      Provider.of<UsernameProvider>(context, listen: false).reset();
-                                      Navigator.of(context).pop(); // Close the dialog
-                                                      Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) => LoginPage(),
-                                                        ),
-                                                      );
-                                    },
-                                    child: const Text('Logout'),
-                                  )
-                                ],
-                              );
-                            });
-                      }),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    _buildMenuButton(
+                        text: 'Ranking',
+                        icon: Icons.polymer_sharp,
+                        onPressed: () async {
+
+                          DbHelper dbHelper = DbHelper.instance;
+                          double elo = await dbHelper.getUserElo(username);
+                          Matchmake m = Matchmake();
+                          String rank = m.getRank(elo); 
+                          
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Ranking"),
+                                  content: Text(
+                                      "Elo: $elo\nRanking: $rank"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                );
+                              });
+                        }),
+                    _buildMenuButton(
+                        text: 'Your Schedule',
+                        icon: Icons.timelapse,
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SchedulePage(),
+                            ),
+                          );
+                        }),
+                    _buildMenuButton(
+                        text: 'Information',
+                        icon: Icons.info,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Credits"),
+                                  content: const Text(
+                                      "Joshua Rowley\nSye Phasuk\nRhys Woods\nKuwsh Okai\nJojo Andoh\nMahmoud Abdelfattah\nStanislaw Nowaczyk"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                );
+                              });
+                        }),
+                    _buildMenuButton(
+                        text: 'Logout',
+                        icon: Icons.logout,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Logout"),
+                                  content: const Text(
+                                      "Are you sure you want to logout?"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        // logic for logging out the user goes here
+                                        Provider.of<UsernameProvider>(context, listen: false).reset();
+                                        Navigator.of(context).pop(); // Close the dialog
+                                                        Navigator.pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) => LoginPage(),
+                                                          ),
+                                                        );
+                                      },
+                                      child: const Text('Logout'),
+                                    ),
+                                  ],
+                                );
+                              });
+                        }),
+                        
+                        const SizedBox(height: 50),
+
+                  ],
+                ),
               ),
             ],
           ),
@@ -213,5 +243,12 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  } 
+  Future<double> getUserElo(String user) async {
+    DbHelper dbHelper = DbHelper.instance;
+    double elo = await dbHelper.getUserElo(user);
+    return elo;
   }
+
 }
+

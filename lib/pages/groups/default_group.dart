@@ -61,7 +61,6 @@ class DefaultGroupPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 230, 245, 253),
@@ -73,7 +72,6 @@ class DefaultGroupPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 230, 245, 253),
@@ -90,7 +88,6 @@ class DefaultGroupPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 230, 245, 253),
@@ -102,7 +99,6 @@ class DefaultGroupPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 230, 245, 253),
@@ -142,14 +138,14 @@ class DefaultGroupPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text("Post $index"),
-                    subtitle: const Text("Post content... lorem ipsum dolor sit amet"),
+                    subtitle: const Text(""),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.thumb_up),
+                          icon: Icon(Icons.thumb_up_outlined),
                           onPressed: () {
-                            // Handle button press
+                            icon:  Icon(Icons.thumb_up);
                           },
                         ),
                         IconButton(
