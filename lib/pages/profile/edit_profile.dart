@@ -1,10 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sportsmate_flutter/DbHelper.dart';
+import 'package:sportsmate_flutter/userName.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
 
+  void showSuccessMessage(BuildContext context, String changed) {
+  final snackBar = SnackBar(
+    content: Text('$changed Successfully Changed'),
+    duration: Duration(seconds: 5),
+    backgroundColor: Colors.green,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void showExistsMessage(BuildContext context, String changed) {
+  final snackBar = SnackBar(
+    content: Text('$changed Already Exists'),
+    duration: Duration(seconds: 5),
+    backgroundColor: Colors.red,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void showInvalidEmailMessage(BuildContext context) {
+  final snackBar = SnackBar(
+    content: Text('Enter a valid email address'),
+    duration: Duration(seconds: 5),
+    backgroundColor: Colors.red,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+  void showPasswordErrorMessage(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Passwords Do Not Match'),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.red,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+bool isValidEmail(String email) {
+    // This regex allows for most common email formats but may not cover all edge cases
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
+    
+    var currentUsername = Provider.of<UsernameProvider>(context, listen: false).username;
+    var currentEmail = Provider.of<UsernameProvider>(context, listen: false).email;
+
+    final usernameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confirmPasswordController = TextEditingController();
+        
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -22,6 +81,7 @@ class EditProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+      
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -84,23 +144,31 @@ class EditProfileScreen extends StatelessWidget {
   }
 
   Widget _buildFormField(IconData icon, String hintText,
-      {bool obscureText = false}) {
-    return TextField(
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon),
-        hintText: hintText,
-        suffixIcon: obscureText && icon == Icons.lock
-            ? IconButton(
-                onPressed: () {
-                  // Toggles the password visibility
-                  obscureText = !obscureText;
-                },
-                icon: const Icon(Icons.visibility),
-              )
-            : null,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-      ),
+      {bool obscureText = false, required TextEditingController controller}) {
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        return TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            prefixIcon: Icon(icon),
+            hintText: hintText,
+            suffixIcon: obscureText && icon == Icons.lock
+                ? IconButton(
+                    onPressed: () {
+                      // Toggles the password visibility
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                    icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
+                  )
+                : null,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+          ),
+        );
+      }
     );
   }
+
 }
