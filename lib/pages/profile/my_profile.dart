@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sportsmate_flutter/DbHelper.dart';
 import 'package:sportsmate_flutter/pages/login/loginpage.dart';
 import 'package:sportsmate_flutter/pages/schedule/schedule.dart';
 import 'package:sportsmate_flutter/userName.dart';
@@ -13,7 +12,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final username = Provider.of<UsernameProvider>(context, listen: false).username;
     String email = Provider.of<UsernameProvider>(context).email;
-    DbHelper dbHelper = DbHelper.instance;
     return Scaffold(
       appBar: AppBar(
         title: const Padding(

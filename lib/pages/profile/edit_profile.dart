@@ -9,7 +9,7 @@ class EditProfileScreen extends StatelessWidget {
   void showSuccessMessage(BuildContext context, String changed) {
   final snackBar = SnackBar(
     content: Text('$changed Successfully Changed'),
-    duration: Duration(seconds: 5),
+    duration: const Duration(seconds: 5),
     backgroundColor: Colors.green,
   );
 
@@ -19,7 +19,7 @@ class EditProfileScreen extends StatelessWidget {
 void showExistsMessage(BuildContext context, String changed) {
   final snackBar = SnackBar(
     content: Text('$changed Already Exists'),
-    duration: Duration(seconds: 5),
+    duration: const Duration(seconds: 5),
     backgroundColor: Colors.red,
   );
 
@@ -27,7 +27,7 @@ void showExistsMessage(BuildContext context, String changed) {
 }
 
 void showInvalidEmailMessage(BuildContext context) {
-  final snackBar = SnackBar(
+  const snackBar = SnackBar(
     content: Text('Enter a valid email address'),
     duration: Duration(seconds: 5),
     backgroundColor: Colors.red,
@@ -37,7 +37,7 @@ void showInvalidEmailMessage(BuildContext context) {
 }
 
   void showPasswordErrorMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Passwords Do Not Match'),
       duration: Duration(seconds: 5),
       backgroundColor: Colors.red,
@@ -57,7 +57,6 @@ bool isValidEmail(String email) {
   Widget build(BuildContext context) {
     
     var currentUsername = Provider.of<UsernameProvider>(context, listen: false).username;
-    var currentEmail = Provider.of<UsernameProvider>(context, listen: false).email;
 
     final usernameController = TextEditingController();
     final emailController = TextEditingController();
@@ -96,17 +95,17 @@ bool isValidEmail(String email) {
               ),
             ),
 
-            SizedBox(height: 30),
-            Divider(),
-            SizedBox(height: 10),
+            const SizedBox(height: 30),
+            const Divider(),
+            const SizedBox(height: 10),
             _buildFormField(Icons.person, "Username", controller: usernameController),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildFormField(Icons.email, "Email", controller: emailController),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildFormField(Icons.lock, "Password", obscureText: true, controller: passwordController),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildFormField(Icons.lock, "Confirm Password", obscureText: true, controller: confirmPasswordController),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             ElevatedButton(
               onPressed: () async {
@@ -207,5 +206,4 @@ bool isValidEmail(String email) {
       }
     );
   }
-
 }

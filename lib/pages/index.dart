@@ -24,12 +24,8 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Bottom Navigation Demo'),
-      // ),
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        // backgroundColor: Colors.blue,
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
